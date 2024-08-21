@@ -19,6 +19,7 @@ hilt-android = "2.51"
 hilt-navigation-compose = "1.0.0"
 lifecycle-viewmodel-compose = "2.6.1"
 leanback = "1.0.0"
+coil-kt = "2.7.0"
 
 [libraries]
 lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose"}
@@ -26,7 +27,8 @@ hilt-navigation-compose = {module = "androidx.hilt:hilt-navigation-compose", ver
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt-android"}
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android"}
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json"}
-coli = { module = "io.coil-kt:coil", version.ref = "coli"}
+coil = { module = "io.coil-kt:coil", version.ref = "coli"}
+coil-kt = { module = "io.coil-kt:coil-compose", version.ref = "coil-kt"}
 zxing-core = { module = "com.google.zxing:core", version.ref = "zxing-core"}
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }

@@ -11,7 +11,8 @@ import androidx.tv.material3.Text
 
 @Composable
 fun HomeView(){
-    CenterText("HomeView")
+//    CenterText("HomeView")
+    FeedView(modifier = Modifier.fillMaxSize())
 }
 
 @Composable
