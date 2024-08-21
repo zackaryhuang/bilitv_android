@@ -9,10 +9,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -22,6 +26,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
@@ -64,8 +69,7 @@ fun FeedView(modifier: Modifier = Modifier, onSelectVideo: (VideoInfo) -> Unit) 
         TvLazyVerticalGrid(
             state = listState,
             modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.LightGray),
+                .fillMaxWidth(),
             columns = TvGridCells.Fixed(4),
             contentPadding = PaddingValues(horizontal = 10.dp, vertical = 10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -97,9 +101,9 @@ fun DataItem(
     onClick: ((VideoInfo) -> Unit)? = null) {
     Box(
         modifier = Modifier
-            .clip(RoundedCornerShape(8.dp))
-            .background(Color.White)
-            .size(width = 190.dp, height = 220.dp)
+//            .clip(RoundedCornerShape(8.dp))
+//            .background(Color.White)
+            .height(240.dp)
             .clickable {
                 onClick?.let {
                     it(item)
@@ -109,7 +113,7 @@ fun DataItem(
         Box(
             modifier = Modifier
                 .padding(all = 10.dp)
-                .background(Color.White)
+//                .background(Color.White)
         ) {
             Column(
                 modifier = Modifier
@@ -121,18 +125,38 @@ fun DataItem(
                         url = item.pic,
                         modifier = Modifier
                             .size(width = 200.dp, height = 130.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Spacer(
+                        modifier = Modifier
+                            .height(10.dp)
                     )
                     Text(
                         text = item.title,
                         maxLines = 2,
-                        color = Color.Black
+                        color = Color.LightGray
                     )
                 }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RemoteImage(
+                        url = item.owner.face,
+                        modifier = Modifier
+                            .size(width = 20.dp, height = 20.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
 
-                Text(
-                    text = item.owner.name,
-                    color = Color.Gray,
-                )
+                    Spacer(
+                        modifier = Modifier
+                            .width(10.dp)
+                    )
+
+                    Text(
+                        text = item.owner.name,
+                        color = Color.Gray,
+                    )
+                }
             }
         }
     }

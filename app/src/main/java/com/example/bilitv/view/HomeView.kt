@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -45,16 +46,15 @@ import com.example.bilitv.R
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun HomeView(){
-    var isFocused by remember { mutableStateOf(false) }
+    var isFocused by remember { mutableStateOf(true) }
     var width = 300.dp
     if (isFocused) {
-        width = 100.dp
+        width = 300.dp
     }
     Row {
         SidePanel(
             modifier = Modifier
-                .fillMaxHeight()
-                .width(width),
+                .fillMaxHeight(),
             onFocusChanged = { focusState ->
                 isFocused = focusState.isFocused
             }
@@ -86,30 +86,39 @@ fun CenterText(text: String) {
 fun SidePanel(modifier: Modifier = Modifier, onFocusChanged: (FocusState) -> Unit) {
     val items = listOf(
         SidePanelItem("推荐", R.drawable.icon_recommend),
-        SidePanelItem("推荐", R.drawable.icon_recommend),
-        SidePanelItem("推荐", R.drawable.icon_recommend),
-        SidePanelItem("推荐", R.drawable.icon_recommend),
+        SidePanelItem("热门", R.drawable.icon_recommend),
+        SidePanelItem("直播", R.drawable.icon_recommend),
+        SidePanelItem("排行榜", R.drawable.icon_recommend),
+        SidePanelItem("关注", R.drawable.icon_recommend),
     )
 
     var isFocused by remember {
-        mutableStateOf(false)
+        mutableStateOf(true)
     }
 
     Column(
         verticalArrangement = Arrangement.Top,
         modifier = Modifier
+            .fillMaxHeight()
             .focusable(true)
+            .background(Color(0xFF1E2022))
 
     ) {
+        Spacer(
+            modifier = Modifier.height(30.dp)
+        )
+
         items.forEach {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(all = 15.dp)
             ) {
                 Image(
                     painter = painterResource(id = it.image),
                     contentDescription = "Sample Image",
                     modifier = Modifier
-                        .size(40.dp),
+                        .size(20.dp),
                     contentScale = ContentScale.Crop,
                 )
 
