@@ -20,6 +20,7 @@ hilt-navigation-compose = "1.0.0"
 lifecycle-viewmodel-compose = "2.6.1"
 leanback = "1.0.0"
 coil-kt = "2.7.0"
+material3Android = "1.2.1"
 
 [libraries]
 lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose"}
@@ -46,6 +47,7 @@ converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref
 hutool-crypto = { module = "cn.hutool:hutool-crypto", version.ref = "hutool-crypto"}
 mmkv = { module = "com.tencent:mmkv", version.ref = "mmkv"}
 androidx-leanback = { group = "androidx.leanback", name = "leanback", version.ref = "leanback" }
+androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
 
 [plugins]
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin"}

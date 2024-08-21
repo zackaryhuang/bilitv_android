@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,14 +20,21 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.tv.foundation.lazy.grid.TvGridCells
+import androidx.tv.foundation.lazy.grid.TvLazyVerticalGrid
+import androidx.tv.foundation.lazy.grid.rememberTvLazyGridState
 import androidx.tv.material3.Text
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -34,8 +42,8 @@ import com.example.bilitv.view.model.FeedViewModel
 import com.jing.bilibilitv.http.data.VideoInfo
 
 @Composable
-fun FeedView(modifier: Modifier) {
-    val listState = rememberLazyGridState()
+fun FeedView(modifier: Modifier = Modifier, onSelectVideo: (VideoInfo) -> Unit) {
+    val listState = rememberTvLazyGridState()
     val viewModel: FeedViewModel = hiltViewModel()
     val dataItems = viewModel.feedItems.collectAsState()
     LaunchedEffect(listState) {
@@ -53,12 +61,12 @@ fun FeedView(modifier: Modifier) {
     }
 
     Column {
-        LazyVerticalGrid(
+        TvLazyVerticalGrid(
             state = listState,
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color.LightGray),
-            columns = GridCells.Fixed(4),
+            columns = TvGridCells.Fixed(4),
             contentPadding = PaddingValues(horizontal = 10.dp, vertical = 10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -66,16 +74,27 @@ fun FeedView(modifier: Modifier) {
         ) {
             items(dataItems.value.count()) { index ->
                 val dataItem = dataItems.value[index]
-                DataItem(dataItem, onClick = { item ->
-                    println(item.title)
-                })
+                DataItem(
+                    modifier = Modifier
+                        .focusable()
+                        .onFocusChanged {
+                            println(it.isFocused)
+                        },
+                    item = dataItem,
+                    onClick = { item ->
+                        println(item.title)
+                    }
+                )
             }
         }
     }
 }
 
 @Composable
-fun DataItem(item: VideoInfo, onClick: ((VideoInfo) -> Unit)? = null) {
+fun DataItem(
+    modifier: Modifier,
+    item: VideoInfo,
+    onClick: ((VideoInfo) -> Unit)? = null) {
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(8.dp))
