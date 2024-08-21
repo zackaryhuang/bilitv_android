@@ -1,0 +1,54 @@
+[versions]
+agp = "8.5.0"
+kotlin = "1.9.0"
+coreKtx = "1.13.1"
+appcompat = "1.7.0"
+composeBom = "2024.04.01"
+tvFoundation = "1.0.0-alpha07"
+tvMaterial = "1.0.0-alpha07"
+lifecycleRuntimeKtx = "2.8.4"
+activityCompose = "1.9.1"
+media3DatasourceOkhttp = "1.4.0"
+converter-gson = "2.9.0"
+hutool-crypto = "5.8.18"
+mmkv = "1.3.9"
+zxing-core = "3.5.0"
+coli = "2.2.2"
+kotlinx-serialization-json = "1.6.0"
+hilt-android = "2.51"
+hilt-navigation-compose = "1.0.0"
+lifecycle-viewmodel-compose = "2.6.1"
+leanback = "1.0.0"
+
+[libraries]
+lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose"}
+hilt-navigation-compose = {module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose"}
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt-android"}
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android"}
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json"}
+coli = { module = "io.coil-kt:coil", version.ref = "coli"}
+zxing-core = { module = "com.google.zxing:core", version.ref = "zxing-core"}
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-tv-foundation = { group = "androidx.tv", name = "tv-foundation", version.ref = "tvFoundation" }
+androidx-tv-material = { group = "androidx.tv", name = "tv-material", version.ref = "tvMaterial" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-media3-datasource-okhttp = { group = "androidx.media3", name = "media3-datasource-okhttp", version.ref = "media3DatasourceOkhttp" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converter-gson"}
+hutool-crypto = { module = "cn.hutool:hutool-crypto", version.ref = "hutool-crypto"}
+mmkv = { module = "com.tencent:mmkv", version.ref = "mmkv"}
+androidx-leanback = { group = "androidx.leanback", name = "leanback", version.ref = "leanback" }
+
+[plugins]
+kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin"}
+android-application = { id = "com.android.application", version.ref = "agp" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-android"}
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
