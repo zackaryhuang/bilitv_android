@@ -14,11 +14,11 @@ sealed class NestedScreens(val title: String) {
 
 object MenuData {
     val menuItems = listOf(
-        MenuItem(NestedScreens.Home.title, "Home", R.drawable.icon_recommend),
-        MenuItem(NestedScreens.Search.title, "Search", R.drawable.icon_recommend),
-        MenuItem(NestedScreens.Movies.title, "Movies", R.drawable.icon_recommend),
-        MenuItem(NestedScreens.Songs.title, "Songs", R.drawable.icon_recommend),
-        MenuItem(NestedScreens.Favorites.title, "Favorites", R.drawable.icon_recommend),
+        MenuItem(NestedScreens.Home.title, "推荐", R.drawable.icon_recommend),
+        MenuItem(NestedScreens.Search.title, "热门", R.drawable.icon_hot),
+        MenuItem(NestedScreens.Movies.title, "直播", R.drawable.icon_live),
+        MenuItem(NestedScreens.Songs.title, "排行榜", R.drawable.icon_rank),
+        MenuItem(NestedScreens.Favorites.title, "关注", R.drawable.icon_follow),
     )
 
     val settingsItem = MenuItem(
