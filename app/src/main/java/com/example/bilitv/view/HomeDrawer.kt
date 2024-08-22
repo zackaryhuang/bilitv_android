@@ -3,17 +3,21 @@ package com.example.bilitv.view
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -42,8 +46,11 @@ fun  HomeDrawer(
     // 使用 animateDpAsState 为 offset 添加动画效果
     val animatedOffset by animateDpAsState(targetValue = offsetState)
 
+    val drawerOpenWidth = 170.dp
+    val drawerCloseWidth = 80.dp
+
     if (drawerState.currentValue == DrawerValue.Open) {
-        offsetState = 170.dp
+        offsetState = drawerOpenWidth - drawerCloseWidth
     } else {
         offsetState = 0.dp
     }
@@ -55,7 +62,7 @@ fun  HomeDrawer(
                 Modifier
                     .background(MaterialTheme.colorScheme.surface)
                     .fillMaxHeight()
-                    .requiredWidth(if (drawerState.currentValue == DrawerValue.Open) 250.dp else 80.dp)
+                    .requiredWidth(if (drawerState.currentValue == DrawerValue.Open) drawerOpenWidth else drawerCloseWidth)
                     .padding(12.dp)
                     .selectableGroup(),
                 horizontalAlignment = Alignment.Start,
@@ -65,6 +72,7 @@ fun  HomeDrawer(
             ) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Header(
+                    expand = drawerState.currentValue == DrawerValue.Open,
                     item = MenuData.profile,
                     onMenuSelected = {
                         drawerState.setValue(DrawerValue.Closed)
@@ -72,6 +80,7 @@ fun  HomeDrawer(
                 )
                 MenuData.menuItems.forEachIndexed { index, item ->
                     NavigationRow(
+                        expand = drawerState.currentValue == DrawerValue.Open,
                         item = item,
                         isSelected = selectedId == item.id,
                         onMenuSelected = {
@@ -82,6 +91,7 @@ fun  HomeDrawer(
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 NavigationRow(
+                    expand = drawerState.currentValue == DrawerValue.Open,
                     item = MenuData.settingsItem,
                     isSelected = selectedId == MenuData.settingsItem.id,
                     onMenuSelected = {
@@ -111,48 +121,64 @@ fun  HomeDrawer(
 }
 
 @Composable
-fun NavigationDrawerScope.NavigationRow(
-    item: MenuItem,
-    isSelected: Boolean,
-    enabled: Boolean = true,
-    onMenuSelected: ((menuItem: MenuItem) -> Unit)?
+fun DrawerItem(
+    expand: Boolean,
+    selected: Boolean,
+    onMenuSelected: ((menuItem: MenuItem) -> Unit)?,
+    item: MenuItem
 ) {
-    NavigationDrawerItem(
-        selected = isSelected,
-        enabled = enabled,
-        colors = NavigationDrawerItemDefaults.colors(
-            selectedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(
-                alpha = 0.5f
-            ),
-            selectedContentColor = MaterialTheme.colorScheme.onSurface,
-        ),
-        onClick = {
-            onMenuSelected?.invoke(item)
-        },
-        leadingContent = {
-            Image(
-                painter = painterResource(item.icon),
-                contentDescription = item.text
-            )
-        }
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                if (onMenuSelected != null) {
+                    onMenuSelected(item)
+                }
+            }
+            .background(if (selected) Color.White else Color.Gray)
     ) {
-        Text(item.text)
+        Image(
+            modifier = Modifier.size(40.dp),
+            painter = painterResource(item.icon),
+            contentDescription = item.text
+        )
+        if (expand) {
+            Spacer(modifier = Modifier.width(20.dp))
+            Text(item.text)
+        }
     }
 }
 
 @Composable
-fun NavigationDrawerScope.Header(
-    item: MenuItem, onMenuSelected: ((menuItem: MenuItem) -> Unit)?
+fun NavigationDrawerScope.NavigationRow(
+    item: MenuItem,
+    isSelected: Boolean,
+    enabled: Boolean = true,
+    expand: Boolean,
+    onMenuSelected: ((menuItem: MenuItem) -> Unit)?
 ) {
-    NavigationDrawerItem(selected = false, onClick = {
+    DrawerItem(
+        expand = expand,
+        item = item,
+        selected = isSelected,
+        onMenuSelected = {
+            onMenuSelected?.invoke(item)
+        },
+    )
+}
+
+@Composable
+fun NavigationDrawerScope.Header(
+    item: MenuItem,
+    expand: Boolean,
+    onMenuSelected: ((menuItem: MenuItem) -> Unit)?
+) {
+    DrawerItem(
+        expand = expand,
+        item = item,
+        selected = false,
+        onMenuSelected = {
         onMenuSelected?.invoke(item)
-    }, leadingContent = {
-        Image(
-            painter = painterResource(item.icon),
-            contentDescription = item.text,
-            modifier = Modifier.size(40.dp),
-        )
-    }) {
-        Text(item.text)
-    }
+    })
 }
