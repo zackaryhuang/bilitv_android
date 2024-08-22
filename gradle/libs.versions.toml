@@ -3,9 +3,9 @@ agp = "8.5.0"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 appcompat = "1.7.0"
-composeBom = "2024.04.01"
-tvFoundation = "1.0.0-alpha07"
-tvMaterial = "1.0.0-alpha07"
+composeBom = "2024.08.00"
+tvFoundation = "1.0.0-alpha11"
+tvMaterial = "1.0.0"
 lifecycleRuntimeKtx = "2.8.4"
 activityCompose = "1.9.1"
 media3DatasourceOkhttp = "1.4.0"
@@ -56,3 +56,5 @@ jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = 
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-android"}
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
+[bundles]
+compose-tv = [ "androidx-tv-foundation", "androidx-tv-material" ]

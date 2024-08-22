@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.coil)
     implementation(libs.coil.kt)
+    implementation(libs.bundles.compose.tv)
     implementation(libs.zxing.core)
     implementation(libs.mmkv)
     implementation(libs.hutool.crypto)

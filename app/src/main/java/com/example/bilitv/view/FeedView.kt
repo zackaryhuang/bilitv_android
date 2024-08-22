@@ -24,7 +24,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,25 +68,24 @@ fun FeedView(modifier: Modifier = Modifier, onSelectVideo: (VideoInfo) -> Unit) 
             }
     }
 
-    Column {
-        TvLazyVerticalGrid(
-            state = listState,
-            modifier = Modifier
-                .fillMaxWidth(),
-            columns = TvGridCells.Fixed(4),
-            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 10.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
+    TvLazyVerticalGrid(
+        state = listState,
+        modifier = Modifier
+            .fillMaxWidth(),
+        columns = TvGridCells.Fixed(4),
+        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 10.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp)
 
-        ) {
-            items(dataItems.value.count()) { index ->
-                val dataItem = dataItems.value[index]
+    ) {
+        items(dataItems.value.count()) { index ->
+            val dataItem = dataItems.value[index]
+            Box(
+                modifier = Modifier
+                    .focusable()
+            ) {
                 DataItem(
-                    modifier = Modifier
-                        .focusable()
-                        .onFocusChanged {
-                            println(it.isFocused)
-                        },
+                    modifier = Modifier,
                     item = dataItem,
                     onClick = { item ->
                         println(item.title)
@@ -101,8 +103,6 @@ fun DataItem(
     onClick: ((VideoInfo) -> Unit)? = null) {
     Box(
         modifier = Modifier
-//            .clip(RoundedCornerShape(8.dp))
-//            .background(Color.White)
             .height(240.dp)
             .clickable {
                 onClick?.let {
@@ -113,7 +113,6 @@ fun DataItem(
         Box(
             modifier = Modifier
                 .padding(all = 10.dp)
-//                .background(Color.White)
         ) {
             Column(
                 modifier = Modifier

@@ -10,21 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Surface
-import com.example.bilitv.resource.Resource
 import com.example.bilitv.ui.theme.Bili_tv_androidTheme
-import com.example.bilitv.view.HomeView
+import com.example.bilitv.view.HomeScreen
 import com.example.bilitv.view.LoginView
 import com.example.bilitv.view.SplashView
 import com.example.bilitv.view.model.LoginUserViewModel
-import com.jing.bilibilitv.http.data.UserInfo
 import com.tencent.mmkv.MMKV
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -45,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     shape = RectangleShape
                 ) {
                     if (userInfo.value?.isLogin == true) {
-                        HomeView()
+                        HomeScreen()
                     } else if (userInfo.value == null) {
                         SplashView()
                     } else {
