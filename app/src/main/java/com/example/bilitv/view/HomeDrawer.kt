@@ -1,5 +1,6 @@
 package com.example.bilitv.view
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,10 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -32,6 +37,16 @@ fun  HomeDrawer(
 ) {
     val closeDrawerWidth = 80.dp
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    var offsetState by remember { mutableStateOf(0.dp) }
+
+    // 使用 animateDpAsState 为 offset 添加动画效果
+    val animatedOffset by animateDpAsState(targetValue = offsetState)
+
+    if (drawerState.currentValue == DrawerValue.Open) {
+        offsetState = 170.dp
+    } else {
+        offsetState = 0.dp
+    }
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -86,7 +101,7 @@ fun  HomeDrawer(
                 .fillMaxSize()
                 .padding(start = closeDrawerWidth)
                 .offset(
-                    x = if (drawerState.currentValue == DrawerValue.Open) 170.dp else 0.dp,
+                    x = animatedOffset,
                     y = 0.dp
                 )
         ) {
