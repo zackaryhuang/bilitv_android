@@ -30,15 +30,18 @@ import androidx.compose.ui.unit.sp
 import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Text
 import com.example.bilitv.R
+import com.jing.bilibilitv.http.data.UserInfo
 
 //@Preview
 @OptIn(ExperimentalTvMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun HomeScreen(){
-    HomeDrawer(content = {
-        FeedView {
+fun HomeScreen(userInfo: UserInfo){
+    HomeDrawer(
+        userInfo = userInfo,
+        content = {
+            FeedView {
 
-        }
+            }
     }) { menuItem ->
         println(menuItem.text)
     }

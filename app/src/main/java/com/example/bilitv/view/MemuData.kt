@@ -23,13 +23,13 @@ object MenuData {
 
     val settingsItem = MenuItem(
         NestedScreens.Settings.title,
-        "Settings",
+        "设置",
         R.drawable.icon_recommend,
     )
 
     val profile = MenuItem(
         NestedScreens.Home.title,
-        "My Profile",
+        "我的",
         R.drawable.icon_recommend,
     )
 }

@@ -7,7 +7,9 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.tv.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.tv.material3.ExperimentalTvMaterial3Api
@@ -17,8 +19,10 @@ import com.example.bilitv.view.HomeScreen
 import com.example.bilitv.view.LoginView
 import com.example.bilitv.view.SplashView
 import com.example.bilitv.view.model.LoginUserViewModel
+import com.jing.bilibilitv.http.data.UserInfo
 import com.tencent.mmkv.MMKV
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -39,7 +43,7 @@ class MainActivity : ComponentActivity() {
                     shape = RectangleShape
                 ) {
                     if (userInfo.value?.isLogin == true) {
-                        HomeScreen()
+                        HomeScreen(userInfo.value!!)
                     } else if (userInfo.value == null) {
                         SplashView()
                     } else {

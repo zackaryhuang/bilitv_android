@@ -1,7 +1,12 @@
 package com.example.bilitv.view
 
 import androidx.annotation.ArrayRes
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,9 +29,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,10 +44,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.*
+import com.jing.bilibilitv.http.data.UserInfo
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun  HomeDrawer(
+    userInfo: UserInfo,
     content: @Composable () -> Unit,
     selectedId: String = MenuData.menuItems.first().id,
     onMenuSelected: ((menuItem: MenuItem) -> Unit)?
@@ -51,7 +64,7 @@ fun  HomeDrawer(
     // 使用 animateDpAsState 为 offset 添加动画效果
     val animatedOffset by animateDpAsState(targetValue = offsetState)
 
-    val drawerOpenWidth = 170.dp
+    val drawerOpenWidth = 150.dp
     val drawerCloseWidth = 80.dp
 
     if (drawerState.currentValue == DrawerValue.Open) {
@@ -76,18 +89,20 @@ fun  HomeDrawer(
                 ),
             ) {
                 Spacer(modifier = Modifier.height(8.dp))
-                Header(
+                DrawerItem(
                     expand = drawerState.currentValue == DrawerValue.Open,
                     item = MenuData.profile,
+                    faceUrl = userInfo.face,
+                    selected = false,
                     onMenuSelected = {
                         drawerState.setValue(DrawerValue.Closed)
                     }
                 )
                 MenuData.menuItems.forEachIndexed { index, item ->
-                    NavigationRow(
+                    DrawerItem(
                         expand = drawerState.currentValue == DrawerValue.Open,
                         item = item,
-                        isSelected = selectedId == item.id,
+                        selected = selectedId == item.id,
                         onMenuSelected = {
                             drawerState.setValue(DrawerValue.Closed)
                             onMenuSelected?.invoke(item)
@@ -95,10 +110,10 @@ fun  HomeDrawer(
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                NavigationRow(
+                DrawerItem(
                     expand = drawerState.currentValue == DrawerValue.Open,
                     item = MenuData.settingsItem,
-                    isSelected = selectedId == MenuData.settingsItem.id,
+                    selected = selectedId == MenuData.settingsItem.id,
                     onMenuSelected = {
                         drawerState.setValue(DrawerValue.Closed)
                         onMenuSelected?.invoke(MenuData.settingsItem)
@@ -130,42 +145,85 @@ fun DrawerItem(
     expand: Boolean,
     selected: Boolean,
     onMenuSelected: ((menuItem: MenuItem) -> Unit)?,
+    faceUrl: String? = null,
     item: MenuItem
 ) {
-    val isFocus = remember { MutableInteractionSource() }.collectIsFocusedAsState()
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .clip(RoundedCornerShape(15.dp))
-            .fillMaxWidth()
-            .background(
-                if (isFocus.value) {
-                    Color.White
-                } else if (selected) Color.LightGray else Color.Unspecified
-            )
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = if (expand) Arrangement.Start else Arrangement.Center,
-            modifier = Modifier
-                .padding(all = 5.dp)
-                .clickable {
-                    if (onMenuSelected != null) {
-                        onMenuSelected(item)
-                    }
-                }
-        ) {
-            Image(
-                modifier = Modifier.size(40.dp),
-                painter = painterResource(item.icon),
-                contentDescription = item.text
-            )
-            if (expand) {
-                Spacer(modifier = Modifier.width(20.dp))
-                Text(
-                    item.text,
-                    color = if (isFocus.value) Color.Black else Color.White
+    val interactionSource = remember { MutableInteractionSource() }
+    val isFocused by interactionSource.collectIsFocusedAsState()
+    val animatedFloat = remember { Animatable(1f) }
+    val scope = rememberCoroutineScope()
+
+
+    LaunchedEffect(isFocused) {
+        if (isFocused) {
+            delay(1.seconds)
+            animatedFloat.animateTo(
+                targetValue = 0f, animationSpec = infiniteRepeatable(
+                    animation = tween(700, easing = FastOutSlowInEasing),
+                    repeatMode = RepeatMode.Reverse
                 )
+            )
+        } else {
+            animatedFloat.stop()
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            scope.launch {
+                animatedFloat.stop()
+            }
+        }
+    }
+
+    Surface(
+        onClick = {
+            if (onMenuSelected != null) {
+                onMenuSelected(item)
+            }
+        },
+        colors = ClickableSurfaceDefaults.colors(containerColor = if (selected) Color.LightGray else Color.Unspecified, focusedContainerColor = Color.White),
+        interactionSource = interactionSource
+    ) {
+        Box(
+            contentAlignment = if (expand) Alignment.CenterStart else Alignment.Center,
+            modifier = Modifier
+                .clip(RoundedCornerShape(15.dp))
+                .fillMaxWidth()
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .padding(all = 5.dp)
+                    .clickable {
+                        if (onMenuSelected != null) {
+                            onMenuSelected(item)
+                        }
+                    }
+            ) {
+                if (faceUrl != null) {
+                    RemoteImage(
+                        url = faceUrl,
+                        Modifier.size(30.dp)
+                            .clip(RoundedCornerShape(20.dp))
+                    )
+                } else {
+                    Image(
+                        modifier = Modifier.size(30.dp),
+                        painter = painterResource(item.icon),
+                        contentDescription = item.text
+                    )
+                }
+                
+                if (expand) {
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(
+                        item.text,
+                        color = if (isFocused) Color.Black else Color.White,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
     }
