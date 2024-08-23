@@ -4,8 +4,6 @@ kotlin = "1.9.0"
 coreKtx = "1.13.1"
 appcompat = "1.7.0"
 composeBom = "2024.08.00"
-tvFoundation = "1.0.0-alpha11"
-tvMaterial = "1.0.0"
 lifecycleRuntimeKtx = "2.8.4"
 activityCompose = "1.9.1"
 media3DatasourceOkhttp = "1.4.0"
@@ -21,8 +19,13 @@ lifecycle-viewmodel-compose = "2.6.1"
 leanback = "1.0.0"
 coil-kt = "2.7.0"
 material3Android = "1.2.1"
+accompanist = "0.31.0-alpha"
+tv-compose = "1.0.0-alpha11"
+tv-compose-material = "1.0.0"
 
 [libraries]
+accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
+accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder", version.ref = "accompanist" }
 lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose"}
 hilt-navigation-compose = {module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose"}
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt-android"}
@@ -38,8 +41,8 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-tv-foundation = { group = "androidx.tv", name = "tv-foundation", version.ref = "tvFoundation" }
-androidx-tv-material = { group = "androidx.tv", name = "tv-material", version.ref = "tvMaterial" }
+androidx-tv-foundation = { module = "androidx.tv:tv-foundation", version.ref = "tv-compose" }
+androidx-tv-material = { module = "androidx.tv:tv-material", version.ref = "tv-compose-material" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-media3-datasource-okhttp = { group = "androidx.media3", name = "media3-datasource-okhttp", version.ref = "media3DatasourceOkhttp" }
@@ -58,3 +61,4 @@ serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref 
 
 [bundles]
 compose-tv = [ "androidx-tv-foundation", "androidx-tv-material" ]
+compose-accompanist = [ "accompanist-navigation-animation", "accompanist-placeholder" ]

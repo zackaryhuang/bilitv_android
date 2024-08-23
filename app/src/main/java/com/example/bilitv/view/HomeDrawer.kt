@@ -54,7 +54,7 @@ import kotlin.time.Duration.Companion.seconds
 fun  HomeDrawer(
     userInfo: UserInfo,
     content: @Composable () -> Unit,
-    selectedId: String = MenuData.menuItems.first().id,
+    selectedId: String,
     onMenuSelected: ((menuItem: MenuItem) -> Unit)?
 ) {
     val closeDrawerWidth = 80.dp
@@ -93,9 +93,10 @@ fun  HomeDrawer(
                     expand = drawerState.currentValue == DrawerValue.Open,
                     item = MenuData.profile,
                     faceUrl = userInfo.face,
-                    selected = false,
+                    selected = selectedId == MenuData.profile.id,
                     onMenuSelected = {
                         drawerState.setValue(DrawerValue.Closed)
+                        onMenuSelected?.invoke(MenuData.profile)
                     }
                 )
                 MenuData.menuItems.forEachIndexed { index, item ->
@@ -182,7 +183,7 @@ fun DrawerItem(
                 onMenuSelected(item)
             }
         },
-        colors = ClickableSurfaceDefaults.colors(containerColor = if (selected) Color.LightGray else Color.Unspecified, focusedContainerColor = Color.White),
+        colors = ClickableSurfaceDefaults.colors(containerColor = if (selected) Color.White.copy(alpha = 0.2f) else Color.Unspecified, focusedContainerColor = Color.White),
         interactionSource = interactionSource
     ) {
         Box(
@@ -227,37 +228,4 @@ fun DrawerItem(
             }
         }
     }
-}
-
-@Composable
-fun NavigationDrawerScope.NavigationRow(
-    item: MenuItem,
-    isSelected: Boolean,
-    enabled: Boolean = true,
-    expand: Boolean,
-    onMenuSelected: ((menuItem: MenuItem) -> Unit)?
-) {
-    DrawerItem(
-        expand = expand,
-        item = item,
-        selected = isSelected,
-        onMenuSelected = {
-            onMenuSelected?.invoke(item)
-        },
-    )
-}
-
-@Composable
-fun NavigationDrawerScope.Header(
-    item: MenuItem,
-    expand: Boolean,
-    onMenuSelected: ((menuItem: MenuItem) -> Unit)?
-) {
-    DrawerItem(
-        expand = expand,
-        item = item,
-        selected = false,
-        onMenuSelected = {
-        onMenuSelected?.invoke(item)
-    })
 }

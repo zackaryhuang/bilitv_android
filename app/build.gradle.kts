@@ -79,6 +79,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.leanback)
     implementation(libs.androidx.material3.android)
+    implementation(libs.bundles.compose.accompanist)
     kapt(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.lifecycle.viewmodel.compose)
