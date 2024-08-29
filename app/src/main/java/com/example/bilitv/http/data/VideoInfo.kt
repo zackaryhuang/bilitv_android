@@ -2,6 +2,29 @@ package com.jing.bilibilitv.http.data
 
 import com.google.gson.annotations.SerializedName
 
+data class HotVideInfo(
+    val pic: String,
+    val title: String,
+    val desc: String,
+    val owner: VideoInfoOwner,
+    val stat: VideoInfoStat,
+    val aid: Long,
+    val cid: Long,
+
+)
+
+data class SeasonRankVideoInfo(
+    val cover: String,
+    val title: String,
+    val stat: SeasonVideoInfoStat,
+    val rank: Long,
+    val rating: String,
+    @SerializedName("season_id")
+    val seasonID: Long,
+    @SerializedName("new_ep")
+    val newEp: SeasonVideoEPInfo
+)
+
 data class VideoInfo(
     val id: Long,
     val bvid: String,
@@ -37,6 +60,20 @@ data class VideoInfoStat(
     val like: Long,
     @SerializedName("danmaku")
     val danmuku: Long
+)
+
+data class SeasonVideoInfoStat(
+    val view: Long,
+    val follow: Long,
+    @SerializedName("series_follow")
+    val seriesFollow: Long,
+    val danmaku: Long
+)
+
+data class SeasonVideoEPInfo(
+    val cover: String,
+    @SerializedName("index_show")
+    val indexShow: String,
 )
 
 data class VideoInfoOwner(

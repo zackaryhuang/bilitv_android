@@ -17,3 +17,21 @@ data class CommonDataResponse<T>(
         return code == 0
     }
 }
+
+data class CommonResultResponse<T>(
+    val code: Int,
+    val message: String,
+    val ttl: Int
+) {
+    var result: T? = null
+        get() {
+//            if (!isRequestSuccess()) {
+//                throw RuntimeException(ResponseErrorCode.resolveErrorMessage(code))
+//            }
+            return field
+        }
+
+    fun isRequestSuccess(): Boolean {
+        return code == 0
+    }
+}

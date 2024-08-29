@@ -1,8 +1,10 @@
 package com.jing.bilibilitv.http.api
 
 import com.example.bilitv.http.api.GlobalState
+import com.google.gson.Gson
 import com.jing.bilibilitv.http.api.wbi.WBI_HEADER
 import com.jing.bilibilitv.http.data.*
+import kotlinx.serialization.json.Json
 import okhttp3.ResponseBody
 import retrofit2.http.*
 
@@ -49,6 +51,25 @@ interface BilibiliApi {
         @Query("refresh_idx") refreshIdx: Int = 1,
         @Query("fresh_idx_1h") refreshIdx1h: Int = 1
     ): CommonDataResponse<RecommendationResponse>
+
+
+    @GET("/x/web-interface/ranking/v2")
+    suspend fun getRank(
+        @Query("rid") rid: Int,
+        @Query("type") type: String = "all"
+    ): CommonDataResponse<PopularResponse>
+
+    @GET("/pgc/web/rank/list")
+    suspend fun getSeasonRank(
+        @Query("season_type") rid: Int,
+        @Query("day") day: Int = 3,
+    ): CommonResultResponse<SeasonRankResponse>
+
+    @GET("/x/web-interface/popular")
+    suspend fun getPopular(
+        @Query("pn") page: Int,
+        @Query("ps") pageSize: Int = 40,
+    ): CommonDataResponse<PopularResponse>
 
     /**
      * 获取视频详情

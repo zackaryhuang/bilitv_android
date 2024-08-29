@@ -2,6 +2,33 @@ package com.example.bilitv.view
 
 import com.example.bilitv.R
 
+class RankCategoryInfo(val title: String, val rid: Int, val isSeason: Boolean = false) {
+    companion object {
+        val All: Array<RankCategoryInfo> = arrayOf(
+            RankCategoryInfo("全站", 0),
+            RankCategoryInfo("动画", 1),
+            RankCategoryInfo("番剧", 1, true),
+            RankCategoryInfo("音乐", 3),
+            RankCategoryInfo("国创", 4, true),
+            RankCategoryInfo("游戏", 4),
+            RankCategoryInfo("娱乐", 5),
+            RankCategoryInfo("电视剧", 11),
+            RankCategoryInfo("电影", 23),
+            RankCategoryInfo("知识", 36),
+            RankCategoryInfo("科技", 188),
+            RankCategoryInfo("运动", 234),
+            RankCategoryInfo("汽车", 223),
+            RankCategoryInfo("生活", 160),
+            RankCategoryInfo("美食", 211),
+            RankCategoryInfo("动物圈", 217),
+            RankCategoryInfo("鬼畜", 119),
+            RankCategoryInfo("时尚", 155),
+            RankCategoryInfo("影视", 181),
+            RankCategoryInfo("纪录片", 177),
+        )
+    }
+}
+
 sealed class NestedScreens(val title: String) {
     object Recommendation : NestedScreens("Recommendation")
     object Hot : NestedScreens("Hot")

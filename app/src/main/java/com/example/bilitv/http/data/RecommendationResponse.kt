@@ -7,3 +7,16 @@ data class RecommendationResponse(
     @SerializedName("item")
     val items: List<VideoInfo>
 )
+
+data class PopularResponse(
+    @SerializedName("list")
+    val items: List<HotVideInfo>,
+    @SerializedName("no_more")
+    val hasMore: Boolean
+)
+
+data class SeasonRankResponse(
+    @SerializedName("list")
+    val items: List<SeasonRankVideoInfo>,
+    val note: String
+)

@@ -58,7 +58,7 @@ import androidx.tv.material3.Text
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.bilitv.R
-import com.example.bilitv.view.model.FeedViewModel
+import com.example.bilitv.view.model.RecommendationScreenModel
 import com.jing.bilibilitv.http.data.VideoInfo
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -69,7 +69,7 @@ fun RecommendationScreen(
     modifier: Modifier = Modifier,
     onSelectVideo: (VideoInfo) -> Unit) {
     val listState = rememberLazyGridState()
-    val viewModel: FeedViewModel = hiltViewModel()
+    val viewModel: RecommendationScreenModel = hiltViewModel()
     val dataItems = viewModel.feedItems.collectAsState()
     LaunchedEffect(listState) {
         if (dataItems.value.isEmpty()) {
