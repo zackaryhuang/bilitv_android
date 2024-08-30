@@ -54,9 +54,20 @@ data class FollowedLiveRoom(
     @SerializedName("tags")
     val tags: String,
     @SerializedName("title")
-    val title: String,
+    override val title: String,
     @SerializedName("uid")
     val uid: Long,
     @SerializedName("uname")
     val uname: String
-)
+): DisplayableData {
+    override val cover: String
+        get() = this.keyframe
+    override val ownerName: String
+        get() = this.uname
+    override val ownerFace: String
+        get() = this.face
+    override val view: String
+        get() = ""
+    override val danmaku: String
+        get() = ""
+}

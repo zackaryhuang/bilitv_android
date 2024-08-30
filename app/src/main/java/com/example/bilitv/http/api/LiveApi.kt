@@ -29,10 +29,33 @@ interface LiveApi {
      * 查询关注到直播间
      */
     @GET("/xlive/web-ucenter/v1/xfetter/GetWebList")
-    suspend fun queryFollowedLiveRoom(
+    suspend fun getFollowedLiveRoom(
         @Query("page") page: Int,
-        @Query("page_size") pageSize: Int,
+        @Query("page_size") pageSize: Int = 10,
     ): CommonDataResponse<FollowedLiveRoomResponse>
+
+    @GET("/xlive/web-interface/v1/second/getListByArea")
+    suspend fun getHotLiveRoom(
+        @Query("page") page: Int,
+        @Query("platform") platform: String = "web",
+        @Query("sort") sortType: String = "online",
+        @Query("page_size") pageSize: Int = 10,
+    ): CommonDataResponse<LiveRoomOfAreaResponse>
+
+    @GET("/xlive/web-interface/v1/second/getList")
+    suspend fun getAreaLiveRoom(
+        @Query("platform") platform: String = "web",
+        @Query("area_id") areaId: Int = 0,
+        @Query("page") page: Int,
+        @Query("parent_area_id") parentAreaId: String
+    ): CommonDataResponse<LiveRoomOfAreaResponse>
+
+    @GET("/xlive/web-interface/v1/second/getUserRecommend")
+    suspend fun getRecommendLiveRoom(
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int = 10,
+        @Query("platform") platform: String = "web",
+    ): CommonDataResponse<LiveRoomOfAreaResponse>
 
     /**
      * 查询直播间视频流

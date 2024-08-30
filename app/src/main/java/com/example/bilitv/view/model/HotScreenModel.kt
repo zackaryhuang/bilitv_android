@@ -3,6 +3,7 @@ package com.example.bilitv.view.model
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jing.bilibilitv.http.api.BilibiliApi
+import com.jing.bilibilitv.http.data.DisplayableData
 import com.jing.bilibilitv.http.data.DynamicItem
 import com.jing.bilibilitv.http.data.HotVideInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,7 @@ class HotScreenModel @Inject constructor(
     private var page = 1
     private var hasMore = true
 
-    private val _feedItems = MutableStateFlow<List<HotVideInfo>>(value = mutableListOf<HotVideInfo>())
+    private val _feedItems = MutableStateFlow<List<DisplayableData>>(value = mutableListOf<DisplayableData>())
     val feedItems = _feedItems.asStateFlow()
 
     fun requestFeed() {

@@ -28,7 +28,20 @@ data class DynamicItem(
     val type: String,
     @SerializedName("visible")
     val visible: Boolean
-)
+): DisplayableData {
+    override val cover: String
+        get() = this.modules.moduleDynamic.major?.archive?.cover ?: ""
+    override val title: String
+        get() = this.modules.moduleDynamic.major?.archive?.title ?: ""
+    override val danmaku: String
+        get() = this.modules.moduleDynamic.major?.archive?.stat?.danmaku ?: ""
+    override val view: String
+        get() = this.modules.moduleDynamic.major?.archive?.stat?.play ?: ""
+    override val ownerFace: String
+        get() = this.modules.moduleAuthor.face
+    override val ownerName: String
+        get() = this.modules.moduleAuthor.name
+}
 
 data class DynamicBasic(
     @SerializedName("comment_id_str")

@@ -2,6 +2,25 @@ package com.example.bilitv.view
 
 import com.example.bilitv.R
 
+class LiveCategoryInfo(val title: String, val areaID: Int?) {
+    companion object {
+        val All: Array<LiveCategoryInfo> = arrayOf(
+            LiveCategoryInfo("关注", null),
+            LiveCategoryInfo("推荐", -1),
+//            LiveCategoryInfo("热门", 0),
+            LiveCategoryInfo("娱乐", 1),
+            LiveCategoryInfo("网游", 2),
+            LiveCategoryInfo("手游", 3),
+            LiveCategoryInfo("电台", 5),
+            LiveCategoryInfo("单机", 6),
+            LiveCategoryInfo("虚拟", 9),
+            LiveCategoryInfo("生活", 10),
+            LiveCategoryInfo("知识", 11),
+            LiveCategoryInfo("竞技", 13),
+        )
+    }
+}
+
 class RankCategoryInfo(val title: String, val rid: Int, val isSeason: Boolean = false) {
     companion object {
         val All: Array<RankCategoryInfo> = arrayOf(
@@ -46,12 +65,6 @@ object MenuData {
         MenuItem(NestedScreens.Live.title, "直播", R.drawable.icon_live),
         MenuItem(NestedScreens.Rank.title, "排行榜", R.drawable.icon_rank),
         MenuItem(NestedScreens.Follow.title, "关注", R.drawable.icon_follow),
-    )
-
-    val settingsItem = MenuItem(
-        NestedScreens.Settings.title,
-        "设置",
-        R.drawable.icon_recommend,
     )
 
     val profile = MenuItem(

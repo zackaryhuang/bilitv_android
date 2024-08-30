@@ -69,94 +69,12 @@ fun FollowScreen() {
             BorderedFocusableItem(onClick = {
 //                onSelectVideo(dataItem)
             }) {
-                FollowFeedDataItem(
-                    modifier = Modifier,
+                DisplayableVideoItem(
                     item = dataItem,
                     onClick = { item ->
-                        println(item.modules.moduleDynamic.major?.archive?.title ?: "")
+                        println(item.title)
                     }
                 )
-            }
-        }
-    }
-}
-
-@Composable
-fun FollowFeedDataItem(
-    modifier: Modifier,
-    item: DynamicItem,
-    onClick: ((DynamicItem) -> Unit)? = null) {
-    Box(
-        modifier = Modifier
-            .height(240.dp)
-            .clickable {
-                onClick?.let {
-                    it(item)
-                }
-            }
-    ) {
-        Box(
-            modifier = Modifier
-                .padding(all = 10.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column {
-                    Box(
-                        modifier = Modifier
-                            .size(width = 200.dp, height = 130.dp)
-                    ) {
-                        RemoteImage(
-                            url = item.modules.moduleDynamic.major?.archive?.cover ?: "",
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clip(RoundedCornerShape(8.dp))
-                        )
-                        Row(
-                            modifier = Modifier
-                                .align(Alignment.BottomStart)
-                                .padding(start = 10.dp, bottom = 5.dp)
-                        ) {
-                            Image(painter = painterResource(id = R.drawable.icon_danmaku_count), contentDescription = "", modifier = Modifier.size(20.dp))
-                            Text(text = item.modules.moduleDynamic.major?.archive?.stat?.danmaku ?: "")
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Image(painter = painterResource(id = R.drawable.icon_play_count), contentDescription = "", modifier = Modifier.size(20.dp))
-                            Text(text = item.modules.moduleDynamic.major?.archive?.stat?.play ?: "")
-                        }
-                    }
-                    Spacer(
-                        modifier = Modifier
-                            .height(10.dp)
-                    )
-                    Text(
-                        text = item.modules.moduleDynamic.major?.archive?.title ?: "",
-                        maxLines = 2,
-                        color = Color.LightGray
-                    )
-                }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RemoteImage(
-                        url = item.modules.moduleAuthor.face,
-                        modifier = Modifier
-                            .size(width = 20.dp, height = 20.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                    )
-
-                    Spacer(
-                        modifier = Modifier
-                            .width(10.dp)
-                    )
-
-                    Text(
-                        text = item.modules.moduleAuthor.name,
-                        color = Color.Gray,
-                    )
-                }
             }
         }
     }

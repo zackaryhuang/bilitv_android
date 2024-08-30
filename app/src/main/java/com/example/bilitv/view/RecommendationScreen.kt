@@ -98,10 +98,9 @@ fun RecommendationScreen(
         items(dataItems.value.count()) { index ->
             val dataItem = dataItems.value[index]
             BorderedFocusableItem(onClick = {
-                onSelectVideo(dataItem)
+//                onSelectVideo(dataItem)
             }) {
-                DataItem(
-                    modifier = Modifier,
+                DisplayableVideoItem(
                     item = dataItem,
                     onClick = { item ->
                         println(item.title)
@@ -112,86 +111,6 @@ fun RecommendationScreen(
     }
 }
 
-@Composable
-fun DataItem(
-    modifier: Modifier,
-    item: VideoInfo,
-    onClick: ((VideoInfo) -> Unit)? = null) {
-    Box(
-        modifier = Modifier
-            .height(240.dp)
-            .clickable {
-                onClick?.let {
-                    it(item)
-                }
-            }
-    ) {
-        Box(
-            modifier = Modifier
-                .padding(all = 10.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column {
-                    Box(
-                        modifier = Modifier
-                            .size(width = 200.dp, height = 130.dp)
-                    ) {
-                        RemoteImage(
-                            url = item.pic,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clip(RoundedCornerShape(8.dp))
-                        )
-                        Row(
-                            modifier = Modifier
-                                .align(Alignment.BottomStart)
-                                .padding(start = 10.dp, bottom = 5.dp)
-                        ) {
-                            Image(painter = painterResource(id = R.drawable.icon_danmaku_count), contentDescription = "", modifier = Modifier.size(20.dp))
-                            Text(text = item.stat.danmuku.toString())
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Image(painter = painterResource(id = R.drawable.icon_play_count), contentDescription = "", modifier = Modifier.size(20.dp))
-                            Text(text = item.stat.view.toString())
-                        }
-                    }
-                    Spacer(
-                        modifier = Modifier
-                            .height(10.dp)
-                    )
-                    Text(
-                        text = item.title,
-                        maxLines = 2,
-                        color = Color.LightGray
-                    )
-                }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RemoteImage(
-                        url = item.owner.face,
-                        modifier = Modifier
-                            .size(width = 20.dp, height = 20.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                    )
-
-                    Spacer(
-                        modifier = Modifier
-                            .width(10.dp)
-                    )
-
-                    Text(
-                        text = item.owner.name,
-                        color = Color.Gray,
-                    )
-                }
-            }
-        }
-    }
-}
 
 object CardItemDefaults {
     @ReadOnlyComposable

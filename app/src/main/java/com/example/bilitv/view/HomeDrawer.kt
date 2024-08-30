@@ -111,15 +111,6 @@ fun  HomeDrawer(
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                DrawerItem(
-                    expand = drawerState.currentValue == DrawerValue.Open,
-                    item = MenuData.settingsItem,
-                    selected = selectedId == MenuData.settingsItem.id,
-                    onMenuSelected = {
-                        drawerState.setValue(DrawerValue.Closed)
-                        onMenuSelected?.invoke(MenuData.settingsItem)
-                    }
-                )
             }
         }, scrimBrush = Brush.horizontalGradient(
             listOf(

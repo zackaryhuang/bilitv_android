@@ -28,7 +28,7 @@ data class LiveRoomOfArea(
     @SerializedName("click_callback")
     val clickCallback: String,
     @SerializedName("cover")
-    val cover: String,
+    override val cover: String,
     @SerializedName("face")
     val face: String,
     @SerializedName("flag")
@@ -64,7 +64,7 @@ data class LiveRoomOfArea(
     @SerializedName("system_cover")
     val systemCover: String,
     @SerializedName("title")
-    val title: String,
+    override val title: String,
     @SerializedName("uid")
     val uid: Long,
     @SerializedName("uname")
@@ -75,7 +75,16 @@ data class LiveRoomOfArea(
     val userCoverFlag: Long,
     @SerializedName("watched_show")
     val watchedShow: WatchedShow
-)
+): DisplayableData {
+    override val ownerName: String
+        get() = this.uname
+    override val ownerFace: String
+        get() = this.face
+    override val view: String
+        get() = ""
+    override val danmaku: String
+        get() = ""
+}
 
 data class WatchedShow(
     @SerializedName("icon")

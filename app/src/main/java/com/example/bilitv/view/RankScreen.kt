@@ -47,14 +47,13 @@ import com.jing.bilibilitv.http.data.SeasonRankVideoInfo
 @Composable
 fun RankScreen() {
     val state = remember { mutableStateOf(0) }
-    val currentCategory = RankCategoryInfo.All[state.value]
     val listState = rememberLazyGridState()
     val viewModel: RankScreenModel = hiltViewModel()
     val dataItems = viewModel.feedItems.collectAsState()
     val seasonDataItems = viewModel.seasonFeedItems.collectAsState()
     LaunchedEffect(listState) {
         if (dataItems.value.isEmpty()) {
-            viewModel.requestFeed(currentCategory)
+            viewModel.requestFeed(RankCategoryInfo.All[state.value])
         }
     }
     Column {
@@ -104,14 +103,13 @@ fun RankScreen() {
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             columns = GridCells.Fixed(4)
         ) {
-            if (currentCategory.isSeason) {
+            if (RankCategoryInfo.All[state.value].isSeason) {
                 items(seasonDataItems.value.count()) { index ->
                     val dataItem = seasonDataItems.value[index]
                     BorderedFocusableItem(onClick = {
 //                onSelectVideo(dataItem)
                     }) {
-                        SeasonRankFeedDataItem(
-                            modifier = Modifier,
+                        DisplayableVideoItem(
                             item = dataItem,
                             onClick = { item ->
                                 println(item.title)
@@ -125,8 +123,7 @@ fun RankScreen() {
                     BorderedFocusableItem(onClick = {
 //                onSelectVideo(dataItem)
                     }) {
-                        HotFeedDataItem(
-                            modifier = Modifier,
+                        DisplayableVideoItem(
                             item = dataItem,
                             onClick = { item ->
                                 println(item.title)
@@ -136,87 +133,6 @@ fun RankScreen() {
                 }
             }
 
-        }
-    }
-}
-
-@Composable
-fun SeasonRankFeedDataItem(
-    modifier: Modifier,
-    item: SeasonRankVideoInfo,
-    onClick: ((SeasonRankVideoInfo) -> Unit)? = null) {
-    Box(
-        modifier = Modifier
-            .height(240.dp)
-            .clickable {
-                onClick?.let {
-                    it(item)
-                }
-            }
-    ) {
-        Box(
-            modifier = Modifier
-                .padding(all = 10.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column {
-                    Box(
-                        modifier = Modifier
-                            .size(width = 200.dp, height = 130.dp)
-                    ) {
-                        RemoteImage(
-                            url = item.cover,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clip(RoundedCornerShape(8.dp))
-                        )
-                        Row(
-                            modifier = Modifier
-                                .align(Alignment.BottomStart)
-                                .padding(start = 10.dp, bottom = 5.dp)
-                        ) {
-                            Image(painter = painterResource(id = R.drawable.icon_danmaku_count), contentDescription = "", modifier = Modifier.size(20.dp))
-                            androidx.tv.material3.Text(text = item.stat.danmaku.toString())
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Image(painter = painterResource(id = R.drawable.icon_play_count), contentDescription = "", modifier = Modifier.size(20.dp))
-                            androidx.tv.material3.Text(text = item.stat.view.toString())
-                        }
-                    }
-                    Spacer(
-                        modifier = Modifier
-                            .height(10.dp)
-                    )
-                    androidx.tv.material3.Text(
-                        text = item.title,
-                        maxLines = 2,
-                        color = Color.LightGray
-                    )
-                }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RemoteImage(
-                        url = item.newEp.cover,
-                        modifier = Modifier
-                            .size(width = 20.dp, height = 20.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                    )
-
-                    Spacer(
-                        modifier = Modifier
-                            .width(10.dp)
-                    )
-
-                    androidx.tv.material3.Text(
-                        text = item.newEp.indexShow,
-                        color = Color.Gray,
-                    )
-                }
-            }
         }
     }
 }

@@ -32,8 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.tv.material3.Text
 import com.example.bilitv.R
 import com.example.bilitv.view.model.HotScreenModel
-import com.jing.bilibilitv.http.data.DynamicItem
-import com.jing.bilibilitv.http.data.HotVideInfo
+import com.jing.bilibilitv.http.data.DisplayableData
 
 @Composable
 fun HotScreen() {
@@ -69,94 +68,12 @@ fun HotScreen() {
             BorderedFocusableItem(onClick = {
 //                onSelectVideo(dataItem)
             }) {
-                HotFeedDataItem(
-                    modifier = Modifier,
+                DisplayableVideoItem(
                     item = dataItem,
                     onClick = { item ->
                         println(item.title)
                     }
                 )
-            }
-        }
-    }
-}
-
-@Composable
-fun HotFeedDataItem(
-    modifier: Modifier,
-    item: HotVideInfo,
-    onClick: ((HotVideInfo) -> Unit)? = null) {
-    Box(
-        modifier = Modifier
-            .height(240.dp)
-            .clickable {
-                onClick?.let {
-                    it(item)
-                }
-            }
-    ) {
-        Box(
-            modifier = Modifier
-                .padding(all = 10.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column {
-                    Box(
-                        modifier = Modifier
-                            .size(width = 200.dp, height = 130.dp)
-                    ) {
-                        RemoteImage(
-                            url = item.pic,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clip(RoundedCornerShape(8.dp))
-                        )
-                        Row(
-                            modifier = Modifier
-                                .align(Alignment.BottomStart)
-                                .padding(start = 10.dp, bottom = 5.dp)
-                        ) {
-                            Image(painter = painterResource(id = R.drawable.icon_danmaku_count), contentDescription = "", modifier = Modifier.size(20.dp))
-                            Text(text = item.stat.danmuku.toString())
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Image(painter = painterResource(id = R.drawable.icon_play_count), contentDescription = "", modifier = Modifier.size(20.dp))
-                            Text(text = item.stat.view.toString())
-                        }
-                    }
-                    Spacer(
-                        modifier = Modifier
-                            .height(10.dp)
-                    )
-                    Text(
-                        text = item.title,
-                        maxLines = 2,
-                        color = Color.LightGray
-                    )
-                }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RemoteImage(
-                        url = item.owner.face,
-                        modifier = Modifier
-                            .size(width = 20.dp, height = 20.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                    )
-
-                    Spacer(
-                        modifier = Modifier
-                            .width(10.dp)
-                    )
-
-                    Text(
-                        text = item.owner.name,
-                        color = Color.Gray,
-                    )
-                }
             }
         }
     }
