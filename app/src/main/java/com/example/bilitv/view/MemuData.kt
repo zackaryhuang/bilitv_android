@@ -61,15 +61,20 @@ sealed class NestedScreens(val title: String) {
 sealed class ScreenRoute(val route: String) {
     object NestHome : ScreenRoute("NestHome")
     object VideoDetail : ScreenRoute("VideoDetail") {
-        const val routeWithArgument: String = "VideoDetail/{aid}/{bvid}/{cid}"
+        const val routeWithArgument: String = "VideoDetail/{aid}/{bvid}/{cid}/{seasonID}/{episodeID}"
         const val aid: String = "aid"
         const val bvid: String = "bvid"
         const val cid: String = "cid"
+        const val seasonID: String = "seasonID"
+        const val episodeID: String = "episodeID"
     }
     object VideoPlayer : ScreenRoute("VideoPlayer") {
-        const val routeWithArgument: String = "VideoPlayer/{aid}/{bvid}"
+        const val routeWithArgument: String = "VideoPlayer/{aid}/{bvid}/{cid}/{seasonID}/{episodeID}"
         const val aid: String = "aid"
         const val bvid: String = "bvid"
+        const val cid: String = "cid"
+        const val seasonID: String = "seasonID"
+        const val episodeID: String = "episodeID"
     }
 }
 

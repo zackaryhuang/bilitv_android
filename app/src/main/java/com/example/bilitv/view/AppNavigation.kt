@@ -33,7 +33,9 @@ fun AppNavigation(
                 var link = ScreenRoute.VideoPlayer.route
                 link += ("/" + (playableData.aid ?: "null"))
                 link += ("/" + (playableData.bvid ?: "null"))
-//                link += ("/" + (playableData.cid ?: "null"))
+                link += ("/" + (playableData.cid ?: "null"))
+                link += ("/" + (playableData.seasonID ?: "null"))
+                link += ("/" + (playableData.episodeID ?: "null"))
                 navController.navigate(link)
             })
         }
@@ -52,6 +54,12 @@ fun AppNavigation(
                 navArgument(ScreenRoute.VideoDetail.bvid) {
                     type = NavType.StringType; nullable = true
                 },
+                navArgument(ScreenRoute.VideoDetail.seasonID) {
+                    type = NavType.StringType; nullable = true
+                },
+                navArgument(ScreenRoute.VideoDetail.episodeID) {
+                    type = NavType.StringType; nullable = true
+                },
             )
         ) { backStackEntry ->
             val cid = backStackEntry.arguments?.getString(ScreenRoute.VideoDetail.cid) ?: ""
@@ -59,6 +67,10 @@ fun AppNavigation(
             val aid = backStackEntry.arguments?.getString(ScreenRoute.VideoDetail.aid)
 
             val bvid = backStackEntry.arguments?.getString(ScreenRoute.VideoDetail.bvid)
+
+            val seasonID = backStackEntry.arguments?.getString(ScreenRoute.VideoDetail.seasonID)
+
+            val episodeID = backStackEntry.arguments?.getString(ScreenRoute.VideoDetail.episodeID)
 
             if (aid != null) {
                 VideoDetailScreen(aid = aid, cid = cid)
@@ -74,20 +86,35 @@ fun AppNavigation(
             enterTransition = { tabEnterTransition() },
             exitTransition = { tabExitTransition() },
             arguments = listOf(
-                navArgument(ScreenRoute.VideoDetail.aid) {
+                navArgument(ScreenRoute.VideoPlayer.aid) {
                     type = NavType.StringType; nullable = true
                 },
-                navArgument(ScreenRoute.VideoDetail.bvid) {
+                navArgument(ScreenRoute.VideoPlayer.bvid) {
+                    type = NavType.StringType; nullable = true
+                },
+                navArgument(ScreenRoute.VideoPlayer.cid) {
+                    type = NavType.StringType; nullable = true
+                },
+                navArgument(ScreenRoute.VideoPlayer.seasonID) {
+                    type = NavType.StringType; nullable = true
+                },
+                navArgument(ScreenRoute.VideoPlayer.episodeID) {
                     type = NavType.StringType; nullable = true
                 },
             )
         ) { backStackEntry ->
 
-            val aid = backStackEntry.arguments?.getString(ScreenRoute.VideoDetail.aid)
+            val cid = backStackEntry.arguments?.getString(ScreenRoute.VideoPlayer.cid)
 
-            val bvid = backStackEntry.arguments?.getString(ScreenRoute.VideoDetail.bvid)
+            val aid = backStackEntry.arguments?.getString(ScreenRoute.VideoPlayer.aid)
 
-            VideoPlayerScreen(aid = aid, bvid = bvid)
+            val bvid = backStackEntry.arguments?.getString(ScreenRoute.VideoPlayer.bvid)
+
+            val seasonID = backStackEntry.arguments?.getString(ScreenRoute.VideoPlayer.seasonID)
+
+            val episodeID = backStackEntry.arguments?.getString(ScreenRoute.VideoPlayer.episodeID)
+
+            VideoPlayerScreen(PlayData(aid, bvid, cid, seasonID, episodeID))
         }
     }
 }

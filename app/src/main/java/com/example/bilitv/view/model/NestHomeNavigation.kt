@@ -40,7 +40,9 @@ fun NestedHomeScreenNavigation(
             NestedScreens.Hot.title,
             enterTransition = { tabEnterTransition() },
             exitTransition = { tabExitTransition() }) {
-            HotScreen()
+            HotScreen(){ playableData ->
+                onSelectPlayableData(playableData)
+            }
         }
 
         composable(
@@ -54,22 +56,26 @@ fun NestedHomeScreenNavigation(
             NestedScreens.Rank.title,
             enterTransition = { tabEnterTransition() },
             exitTransition = { tabExitTransition() }) {
-            RankScreen(onSelectVideo = {
-
-            })
+            RankScreen() { playableData ->
+                onSelectPlayableData(playableData)
+            }
         }
 
         composable(
             NestedScreens.Follow.title,
             enterTransition = { tabEnterTransition() },
             exitTransition = { tabExitTransition() }) {
-            FollowScreen()
+            FollowScreen() { playableData ->
+                onSelectPlayableData(playableData)
+            }
         }
         composable(
             NestedScreens.Profile.title,
             enterTransition = { tabEnterTransition() },
             exitTransition = { tabExitTransition() }) {
-            ProfileScreen()
+            ProfileScreen() { playableData ->
+                onSelectPlayableData(playableData)
+            }
         }
     }
 }

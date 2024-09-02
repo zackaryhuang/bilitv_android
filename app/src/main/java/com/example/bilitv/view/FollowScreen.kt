@@ -34,11 +34,14 @@ import androidx.tv.material3.Text
 import com.example.bilitv.R
 import com.example.bilitv.view.model.FollowScreenModel
 import com.jing.bilibilitv.http.data.DynamicItem
+import com.jing.bilibilitv.http.data.PlayableData
 import com.jing.bilibilitv.http.data.VideoInfo
 
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
-fun FollowScreen() {
+fun FollowScreen(
+    onSelectVideo: (PlayableData) -> Unit
+) {
     val listState = rememberLazyGridState()
     val viewModel: FollowScreenModel = hiltViewModel()
     val dataItems = viewModel.feedItems.collectAsState()
@@ -69,7 +72,7 @@ fun FollowScreen() {
         items(dataItems.value.count()) { index ->
             val dataItem = dataItems.value[index]
             BorderedFocusableItem(onClick = {
-//                onSelectVideo(dataItem)
+                onSelectVideo(dataItem)
             }) {
                 DisplayableVideoItem(
                     item = dataItem,

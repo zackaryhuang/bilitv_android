@@ -28,7 +28,7 @@ data class DynamicItem(
     val type: String,
     @SerializedName("visible")
     val visible: Boolean
-): DisplayableData {
+): DisplayableData, PlayableData {
     override val cover: String
         get() = this.modules.moduleDynamic.major?.archive?.cover ?: ""
     override val title: String
@@ -41,6 +41,16 @@ data class DynamicItem(
         get() = this.modules.moduleAuthor.face
     override val ownerName: String
         get() = this.modules.moduleAuthor.name
+    override val aid: String?
+        get() = this.modules.moduleDynamic.major?.archive?.aid
+    override val bvid: String?
+        get() = this.modules.moduleDynamic.major?.archive?.bvid
+    override val cid: String?
+        get() = null
+    override val seasonID: String?
+        get() = null
+    override val episodeID: String?
+        get() = null
 }
 
 data class DynamicBasic(

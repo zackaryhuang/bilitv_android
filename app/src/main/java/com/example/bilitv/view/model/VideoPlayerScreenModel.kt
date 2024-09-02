@@ -13,6 +13,7 @@ import androidx.media3.datasource.okhttp.OkHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.MergingMediaSource
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
+import com.example.bilitv.view.PlayData
 import com.jing.bilibilitv.http.api.BilibiliApi
 import com.jing.bilibilitv.http.data.VideoUrlResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -59,20 +60,36 @@ class VideoPlayerScreenModel @Inject constructor (
     }
 
     @OptIn(UnstableApi::class)
-    fun requestPlayInfo(aid: String?, bvid: String?) {
+    fun requestPlayInfo(playData: PlayData) {
         viewModelScope.launch {
             var cid: String? = null
-            cid = if (aid != null) {
-                async { bilibiliApi.getCidByAid(aid).data?.first()?.cid }.await()
-            } else if (bvid != null) {
-                async { bilibiliApi.getCidByBvid(bvid).data?.first()?.cid }.await()
+            cid = if (!playData.aid.isNullOrEmpty()) {
+                async { bilibiliApi.getCidByAid(playData.aid!!).data?.first()?.cid }.await()
+            } else if (!playData.bvid.isNullOrEmpty()) {
+                async { bilibiliApi.getCidByBvid(playData.bvid!!).data?.first()?.cid }.await()
+            } else if (!playData.seasonID.isNullOrEmpty()) {
+                async {
+                    val episode = bilibiliApi.getPgcDetail(seasonId = playData.seasonID!!.toLong()).result?.episodes?.first()
+                    playData.aid = episode?.aid?.toString()
+                    playData.cid = episode?.cid?.toString()
+                    playData.episodeID = episode?.id?.toString()
+                    playData.cid
+                }.await()
+            } else if (!playData.episodeID.isNullOrEmpty()) {
+                async {
+                    val episode = bilibiliApi.getPgcDetail(epid = playData.episodeID!!.toLong()).result?.episodes?.first()
+                    playData.aid = episode?.aid?.toString()
+                    playData.cid = episode?.cid?.toString()
+                    playData.episodeID = episode?.id?.toString()
+                    playData.cid
+                }.await()
             } else {
                 return@launch
             }
             cid?.let {
-                val playData = bilibiliApi.getPlayUrl(aid, bvid, cid.toLong()).data
-                _playInfo.value = playData
-                playData?.let { info ->
+                val playInfo = bilibiliApi.getPlayUrl(playData.aid, playData.bvid, cid.toLong()).data
+                _playInfo.value = playInfo
+                playInfo?.let { info ->
                     val factory = ProgressiveMediaSource.Factory(exoPlayerDataSourceFactory)
                     val urlList = mutableListOf(info.dash?.video?.first()?.baseUrl ?: "")
                     info.dash?.audio?.first()?.baseUrl?.let { urlList.add(it) }

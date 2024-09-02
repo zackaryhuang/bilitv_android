@@ -21,16 +21,16 @@ data class WatchLaterItem(
     @SerializedName("title")
     override val title: String,
     @SerializedName("cid")
-    val cid: Long,
+    val cidLong: Long,
     @SerializedName("aid")
-    val aid: Long,
+    val aidLong: Long,
     @SerializedName("stat")
     val stat: VideoStatInfo,
     @SerializedName("pic")
     val pic: String,
     @SerializedName("owner")
     val owner: VideoOwnerInfo,
-): DisplayableData {
+): DisplayableAndPlayableData {
     override val cover: String
         get() = this.pic
     override val ownerFace: String
@@ -41,6 +41,16 @@ data class WatchLaterItem(
         get() = this.stat.danmaku.toCountString()
     override val view: String
         get() = this.stat.view.toCountString()
+    override val aid: String
+        get() = this.aidLong.toString()
+    override val cid: String
+        get() = this.cidLong.toString()
+    override val bvid: String?
+        get() = null
+    override val seasonID: String?
+        get() = null
+    override val episodeID: String?
+        get() = null
 }
 
 data class HistoryCursor(
@@ -99,7 +109,7 @@ data class HistoryItem(
     val videos: Long,
     @SerializedName("view_at")
     val viewAt: Long
-): DisplayableData {
+): DisplayableAndPlayableData {
     override val ownerName: String
         get() = this.authorName
     override val ownerFace: String
@@ -108,6 +118,16 @@ data class HistoryItem(
         get() = ""
     override val view: String
         get() = ""
+    override val aid: String?
+        get() = null
+    override val bvid: String
+        get() = this.history.bvid
+    override val cid: String
+        get() = this.history.cid.toString()
+    override val episodeID: String
+        get() = this.history.epid.toString()
+    override val seasonID: String?
+        get() = null
 }
 
 data class HistoryTab(

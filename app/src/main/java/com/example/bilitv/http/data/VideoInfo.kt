@@ -10,7 +10,7 @@ data class HotVideInfo(
     val stat: VideoStatInfo,
     override val aid: String,
     override val cid: String,
-): DisplayableData, PlayableData {
+): DisplayableAndPlayableData {
     override val cover: String
         get() = this.pic
     override val view: String
@@ -22,6 +22,10 @@ data class HotVideInfo(
     override val ownerName: String
         get() = this.owner.name
     override val bvid: String?
+        get() = null
+    override val seasonID: String?
+        get() = null
+    override val episodeID: String?
         get() = null
 }
 
@@ -51,6 +55,8 @@ interface PlayableData {
     val bvid: String?
     val aid: String?
     val cid: String?
+    val seasonID: String?
+    val episodeID: String?
 }
 
 interface DisplayableData {
@@ -62,6 +68,10 @@ interface DisplayableData {
     val ownerName: String
 }
 
+interface DisplayableAndPlayableData: DisplayableData, PlayableData {
+
+}
+
 data class SeasonRankVideoInfo(
     override val cover: String,
     override val title: String,
@@ -69,10 +79,10 @@ data class SeasonRankVideoInfo(
     val rank: Long,
     val rating: String,
     @SerializedName("season_id")
-    val seasonID: Long,
+    val seasonIDLong: Long,
     @SerializedName("new_ep")
     val newEp: SeasonVideoEPInfo
-): DisplayableData {
+): DisplayableAndPlayableData {
     override val danmaku: String
         get() = this.stat.danmaku.toCountString()
     override val view: String
@@ -81,6 +91,16 @@ data class SeasonRankVideoInfo(
         get() = this.newEp.cover
     override val ownerName: String
         get() = this.newEp.indexShow
+    override val seasonID: String
+        get() = this.seasonIDLong.toString()
+    override val episodeID: String?
+        get() = null
+    override val aid: String?
+        get() = null
+    override val cid: String?
+        get() = null
+    override val bvid: String?
+        get() = null
 }
 
 data class VideoInfo(
@@ -123,6 +143,10 @@ data class VideoInfo(
     override val ownerName: String
         get() = this.owner.name
     override val aid: String?
+        get() = null
+    override val episodeID: String?
+        get() = null
+    override val seasonID: String?
         get() = null
 }
 

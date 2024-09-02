@@ -44,13 +44,16 @@ import androidx.tv.material3.Text
 import com.example.bilitv.R
 import com.example.bilitv.view.model.FollowScreenModel
 import com.example.bilitv.view.model.ProfileScreenModel
+import com.jing.bilibilitv.http.data.DisplayableAndPlayableData
 import com.jing.bilibilitv.http.data.DisplayableData
+import com.jing.bilibilitv.http.data.PlayableData
 import com.jing.bilibilitv.http.data.UserInfo
 import java.nio.LongBuffer
 
-@Preview
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    onSelectVideo: (PlayableData) -> Unit
+) {
     val scrollState = rememberScrollState()
     val viewModel: ProfileScreenModel = hiltViewModel()
     val recentVideos = viewModel.recentViewedItems.collectAsState()
@@ -103,13 +106,17 @@ fun ProfileScreen() {
                 .fillMaxHeight())
         }
         Spacer(modifier = Modifier.height(10.dp))
-        ProfileHorizontalVideoView(title = "最近播放", videos = recentVideos.value)
-        ProfileHorizontalVideoView(title = "稍后观看", videos = watchLaterVideos.value)
+        ProfileHorizontalVideoView(title = "最近播放", videos = recentVideos.value, onSelectVideo = {
+            onSelectVideo(it)
+        })
+        ProfileHorizontalVideoView(title = "稍后观看", videos = watchLaterVideos.value, onSelectVideo = {
+            onSelectVideo(it)
+        })
     }
 }
 
 @Composable
-fun ProfileHorizontalVideoView(title: String, videos: List<DisplayableData>) {
+fun ProfileHorizontalVideoView(title: String, videos: List<DisplayableAndPlayableData>, onSelectVideo: (PlayableData) -> Unit) {
     Column {
         Text(
             text = title,
@@ -127,7 +134,9 @@ fun ProfileHorizontalVideoView(title: String, videos: List<DisplayableData>) {
         ) {
             item {
                 videos.forEach { video ->
-                    BorderedFocusableItem(onClick = { /*TODO*/ }) {
+                    BorderedFocusableItem(onClick = {
+                        onSelectVideo(video)
+                    }) {
                         DisplayableVideoItem(
                             modifier = Modifier.width(200.dp),
                             item = video,

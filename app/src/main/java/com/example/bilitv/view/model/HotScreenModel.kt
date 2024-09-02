@@ -20,7 +20,7 @@ class HotScreenModel @Inject constructor(
     private var page = 1
     private var hasMore = true
 
-    private val _feedItems = MutableStateFlow<List<DisplayableData>>(value = mutableListOf<DisplayableData>())
+    private val _feedItems = MutableStateFlow<List<HotVideInfo>>(value = mutableListOf<HotVideInfo>())
     val feedItems = _feedItems.asStateFlow()
 
     fun requestFeed() {

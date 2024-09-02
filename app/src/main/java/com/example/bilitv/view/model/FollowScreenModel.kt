@@ -20,7 +20,7 @@ class FollowScreenModel @Inject constructor(
     var page = 1
     var offset = ""
 
-    private val _feedItems = MutableStateFlow<List<DisplayableData>>(value = mutableListOf<DisplayableData>())
+    private val _feedItems = MutableStateFlow<List<DynamicItem>>(value = mutableListOf<DynamicItem>())
     val feedItems = _feedItems.asStateFlow()
 
     fun requestFeed() {

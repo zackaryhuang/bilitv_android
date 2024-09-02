@@ -33,9 +33,12 @@ import androidx.tv.material3.Text
 import com.example.bilitv.R
 import com.example.bilitv.view.model.HotScreenModel
 import com.jing.bilibilitv.http.data.DisplayableData
+import com.jing.bilibilitv.http.data.PlayableData
 
 @Composable
-fun HotScreen() {
+fun HotScreen(
+    onSelectVideo: (PlayableData) -> Unit
+) {
     val listState = rememberLazyGridState()
     val viewModel: HotScreenModel = hiltViewModel()
     val dataItems = viewModel.feedItems.collectAsState()
@@ -65,9 +68,11 @@ fun HotScreen() {
     ) {
         items(dataItems.value.count()) { index ->
             val dataItem = dataItems.value[index]
-            BorderedFocusableItem(onClick = {
-//                onSelectVideo(dataItem)
-            }) {
+            BorderedFocusableItem(
+                onClick = {
+                    onSelectVideo(dataItem)
+                }
+            ) {
                 DisplayableVideoItem(
                     item = dataItem,
                     onClick = { item ->

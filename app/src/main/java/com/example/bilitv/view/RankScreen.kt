@@ -110,7 +110,7 @@ fun RankScreen(
                 items(seasonDataItems.value.count()) { index ->
                     val dataItem = seasonDataItems.value[index]
                     BorderedFocusableItem(onClick = {
-//                onSelectVideo(dataItem)
+                        onSelectVideo(dataItem)
                     }) {
                         DisplayableVideoItem(
                             item = dataItem,
@@ -124,7 +124,7 @@ fun RankScreen(
                 items(dataItems.value.count()) { index ->
                     val dataItem = dataItems.value[index]
                     BorderedFocusableItem(onClick = {
-//                onSelectVideo(dataItem)
+                        onSelectVideo(dataItem)
                     }) {
                         DisplayableVideoItem(
                             item = dataItem,

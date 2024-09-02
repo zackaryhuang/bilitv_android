@@ -236,8 +236,8 @@ interface BilibiliApi {
      */
     @GET("/pgc/view/web/season")
     suspend fun getPgcDetail(
-        @Query("ep_id") epid: Long?,
-        @Query("season_id") seasonId: Long?
+        @Query("ep_id") epid: Long? = null,
+        @Query("season_id") seasonId: Long? = null
     ): PgcDetailResponse
 
     /**
