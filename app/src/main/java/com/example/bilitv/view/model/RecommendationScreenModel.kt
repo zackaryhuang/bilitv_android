@@ -16,7 +16,7 @@ class RecommendationScreenModel @Inject constructor(
     private val bilibiliApi: BilibiliApi,
 ) : ViewModel() {
 
-    private val _feedItems = MutableStateFlow<List<DisplayableData>>(value = mutableListOf<DisplayableData>())
+    private val _feedItems = MutableStateFlow<List<VideoInfo>>(value = mutableListOf<VideoInfo>())
     val feedItems = _feedItems.asStateFlow()
 
     fun requestFeed() {

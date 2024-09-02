@@ -52,6 +52,7 @@ import androidx.tv.material3.ClickableSurfaceBorder
 import androidx.tv.material3.ClickableSurfaceDefaults
 import androidx.tv.material3.ClickableSurfaceScale
 import androidx.tv.material3.ClickableSurfaceShape
+import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Surface
 import androidx.tv.material3.Text
@@ -59,15 +60,17 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.bilitv.R
 import com.example.bilitv.view.model.RecommendationScreenModel
+import com.jing.bilibilitv.http.data.PlayableData
 import com.jing.bilibilitv.http.data.VideoInfo
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
 
+@OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun RecommendationScreen(
-    modifier: Modifier = Modifier,
-    onSelectVideo: (VideoInfo) -> Unit) {
+    onSelectVideo: (PlayableData) -> Unit
+) {
     val listState = rememberLazyGridState()
     val viewModel: RecommendationScreenModel = hiltViewModel()
     val dataItems = viewModel.feedItems.collectAsState()
@@ -98,7 +101,7 @@ fun RecommendationScreen(
         items(dataItems.value.count()) { index ->
             val dataItem = dataItems.value[index]
             BorderedFocusableItem(onClick = {
-//                onSelectVideo(dataItem)
+                onSelectVideo(dataItem)
             }) {
                 DisplayableVideoItem(
                     item = dataItem,
@@ -113,6 +116,7 @@ fun RecommendationScreen(
 
 
 object CardItemDefaults {
+    @OptIn(ExperimentalTvMaterial3Api::class)
     @ReadOnlyComposable
     @Composable
     fun border(borderRadius: Dp, color: Color) = ClickableSurfaceDefaults.border(
@@ -123,6 +127,7 @@ object CardItemDefaults {
         )
     )
 
+    @OptIn(ExperimentalTvMaterial3Api::class)
     @ReadOnlyComposable
     @Composable
     fun shape(borderRadius: Dp) = ClickableSurfaceDefaults.shape(
@@ -130,6 +135,7 @@ object CardItemDefaults {
     )
 }
 
+@OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun BorderedFocusableItem(
     modifier: Modifier = Modifier,

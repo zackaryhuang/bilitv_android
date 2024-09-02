@@ -29,12 +29,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Text
 import com.example.bilitv.R
 import com.example.bilitv.view.model.FollowScreenModel
 import com.jing.bilibilitv.http.data.DynamicItem
 import com.jing.bilibilitv.http.data.VideoInfo
 
+@OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun FollowScreen() {
     val listState = rememberLazyGridState()

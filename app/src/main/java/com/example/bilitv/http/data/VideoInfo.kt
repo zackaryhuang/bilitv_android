@@ -1,8 +1,6 @@
 package com.jing.bilibilitv.http.data
 
 import com.google.gson.annotations.SerializedName
-import retrofit2.http.GET
-import kotlin.reflect.KProperty
 
 data class HotVideInfo(
     val pic: String,
@@ -10,19 +8,21 @@ data class HotVideInfo(
     val desc: String,
     val owner: VideoInfoOwner,
     val stat: VideoInfoStat,
-    val aid: Long,
-    val cid: Long,
-): DisplayableData {
+    override val aid: String,
+    override val cid: String,
+): DisplayableData, PlayableData {
     override val cover: String
         get() = this.pic
     override val view: String
         get() = this.stat.view.toCountString()
     override val danmaku: String
-        get() = this.stat.danmuku.toCountString()
+        get() = this.stat.danmaku.toCountString()
     override val ownerFace: String
         get() = this.owner.face
     override val ownerName: String
         get() = this.owner.name
+    override val bvid: String?
+        get() = null
 }
 
 fun Long.toCountString(): String {
@@ -34,6 +34,12 @@ fun Long.toCountString(): String {
     } else {
         this.toString() // 小于 10,000，直接返回原值
     }
+}
+
+interface PlayableData {
+    val bvid: String?
+    val aid: String?
+    val cid: String?
 }
 
 interface DisplayableData {
@@ -68,8 +74,8 @@ data class SeasonRankVideoInfo(
 
 data class VideoInfo(
     val id: Long,
-    val bvid: String,
-    val cid: Long,
+    override val bvid: String,
+    override val cid: String,
     val goto: String,
     val uri: String,
     val pic: String,
@@ -85,7 +91,7 @@ data class VideoInfo(
     val trackId: String,
     val stat: VideoInfoStat,
     val owner: VideoInfoOwner
-): DisplayableData {
+): DisplayableData, PlayableData {
     fun getDurationText(): String {
         if (duration <= 0) {
             return ""
@@ -98,20 +104,22 @@ data class VideoInfo(
     override val cover: String
         get() = this.pic
     override val danmaku: String
-        get() = this.stat.danmuku.toCountString()
+        get() = this.stat.danmaku.toCountString()
     override val view: String
         get() = this.stat.view.toCountString()
     override val ownerFace: String
         get() = this.owner.face
     override val ownerName: String
         get() = this.owner.name
+    override val aid: String?
+        get() = null
 }
 
 data class VideoInfoStat(
     val view: Long,
     val like: Long,
     @SerializedName("danmaku")
-    val danmuku: Long
+    val danmaku: Long
 )
 
 data class SeasonVideoInfoStat(

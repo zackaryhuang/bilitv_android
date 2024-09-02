@@ -18,10 +18,10 @@ class RankScreenModel @Inject constructor(
     private val bilibiliApi: BilibiliApi,
 ) : ViewModel() {
 
-    private val _feedItems = MutableStateFlow<List<DisplayableData>>(value = mutableListOf<DisplayableData>())
+    private val _feedItems = MutableStateFlow<List<HotVideInfo>>(value = mutableListOf<HotVideInfo>())
     val feedItems = _feedItems.asStateFlow()
 
-    private val _seasonFeedItems = MutableStateFlow<List<DisplayableData>>(value = mutableListOf<DisplayableData>())
+    private val _seasonFeedItems = MutableStateFlow<List<SeasonRankVideoInfo>>(value = mutableListOf<SeasonRankVideoInfo>())
     val seasonFeedItems = _seasonFeedItems.asStateFlow()
 
     fun requestFeed(categoryInfo: RankCategoryInfo) {

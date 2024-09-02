@@ -42,10 +42,13 @@ import com.example.bilitv.view.model.FollowScreenModel
 import com.example.bilitv.view.model.RankScreenModel
 import com.jing.bilibilitv.http.data.DynamicItem
 import com.jing.bilibilitv.http.data.HotVideInfo
+import com.jing.bilibilitv.http.data.PlayableData
 import com.jing.bilibilitv.http.data.SeasonRankVideoInfo
 
 @Composable
-fun RankScreen() {
+fun RankScreen(
+    onSelectVideo: (PlayableData) -> Unit
+) {
     val state = remember { mutableStateOf(0) }
     val listState = rememberLazyGridState()
     val viewModel: RankScreenModel = hiltViewModel()
