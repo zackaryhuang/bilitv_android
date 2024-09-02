@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,81 +35,80 @@ fun DisplayableVideoItem(
         modifier = modifier
             .height(240.dp)
     ) {
-        Box(
+        Column(
             modifier = Modifier
-                .padding(all = 10.dp)
+                .fillMaxSize()
+                .padding(all = 10.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column {
-                    Box(
-                        modifier = Modifier
-                            .size(width = 200.dp, height = 130.dp)
-                    ) {
-                        RemoteImage(
-                            url = item.cover,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clip(RoundedCornerShape(8.dp))
-                        )
-                        Row(
-                            modifier = Modifier
-                                .align(Alignment.BottomStart)
-                                .padding(start = 10.dp, bottom = 5.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            if (item.danmaku.isNotEmpty()) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.icon_danmaku_count),
-                                    contentDescription = "",
-                                    modifier = Modifier.size(20.dp)
-                                )
-                                Text(text = item.danmaku)
-                            }
-                            if (item.view.isNotEmpty()) {
-                                Spacer(modifier = Modifier.width(10.dp))
-                                Image(
-                                    painter = painterResource(id = R.drawable.icon_play_count),
-                                    contentDescription = "",
-                                    modifier = Modifier.size(20.dp)
-                                )
-                                Text(text = item.view)
-                            }
-                        }
-                    }
-                    Spacer(
-                        modifier = Modifier
-                            .height(10.dp)
-                    )
-                    Text(
-                        text = item.title,
-                        maxLines = 2,
-                        color = Color.LightGray
-                    )
-                }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
+            Column {
+                Box(
+                    modifier = Modifier
+                        .size(width = 200.dp, height = 130.dp)
                 ) {
                     RemoteImage(
-                        url = item.ownerFace,
+                        url = item.cover,
                         modifier = Modifier
-                            .size(width = 20.dp, height = 20.dp)
+                            .fillMaxSize()
                             .clip(RoundedCornerShape(8.dp))
                     )
-
-                    Spacer(
+                    Row(
                         modifier = Modifier
-                            .width(10.dp)
-                    )
-
-                    Text(
-                        text = item.ownerName,
-                        color = Color.Gray,
-                    )
+                            .align(Alignment.BottomStart)
+                            .padding(start = 10.dp, bottom = 5.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (item.danmaku.isNotEmpty()) {
+                            Image(
+                                painter = painterResource(id = R.drawable.icon_danmaku_count),
+                                contentDescription = "",
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Text(text = item.danmaku)
+                        }
+                        if (item.view.isNotEmpty()) {
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Image(
+                                painter = painterResource(id = R.drawable.icon_play_count),
+                                contentDescription = "",
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Text(text = item.view)
+                        }
+                    }
                 }
+                Spacer(
+                    modifier = Modifier
+                        .height(10.dp)
+                )
+                Text(
+                    text = item.title,
+                    maxLines = 2,
+                    color = Color.LightGray
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                RemoteImage(
+                    url = item.ownerFace,
+                    modifier = Modifier
+                        .size(width = 20.dp, height = 20.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+
+                Spacer(
+                    modifier = Modifier
+                        .width(10.dp)
+                )
+
+                Text(
+                    text = item.ownerName,
+                    color = Color.Gray,
+                )
             }
         }
     }
