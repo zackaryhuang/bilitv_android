@@ -54,7 +54,7 @@ import kotlin.time.Duration.Companion.seconds
 fun  HomeDrawer(
     userInfo: UserInfo,
     content: @Composable () -> Unit,
-    selectedId: String,
+    selectedId: String = NestedScreens.Recommendation.title,
     onMenuSelected: ((menuItem: MenuItem) -> Unit)?
 ) {
     val closeDrawerWidth = 80.dp

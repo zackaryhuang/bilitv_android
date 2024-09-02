@@ -58,6 +58,16 @@ sealed class NestedScreens(val title: String) {
     object Profile : NestedScreens("Profile")
 }
 
+sealed class ScreenRoute(val route: String) {
+    object NestHome : ScreenRoute("NestHome")
+    object VideoDetail : ScreenRoute("VideoDetail") {
+        const val routeWithArgument: String = "VideoDetail/{aid}/{bvid}/{cid}"
+        const val aid: String = "aid"
+        const val bvid: String = "bvid"
+        const val cid: String = "cid"
+    }
+}
+
 object MenuData {
     val menuItems = listOf(
         MenuItem(NestedScreens.Recommendation.title, "推荐", R.drawable.icon_recommend),

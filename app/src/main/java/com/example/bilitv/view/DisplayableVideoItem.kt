@@ -33,11 +33,6 @@ fun DisplayableVideoItem(
     Box(
         modifier = modifier
             .height(240.dp)
-            .clickable {
-                onClick?.let {
-                    it(item)
-                }
-            }
     ) {
         Box(
             modifier = Modifier

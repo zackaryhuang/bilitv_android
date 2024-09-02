@@ -35,7 +35,12 @@ import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Text
 import com.example.bilitv.R
 import com.example.bilitv.view.model.NestedHomeScreenNavigation
+import com.example.bilitv.view.model.tabEnterTransition
+import com.example.bilitv.view.model.tabExitTransition
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.jing.bilibilitv.http.data.PlayableData
 import com.jing.bilibilitv.http.data.UserInfo
 
 //@Preview
@@ -43,7 +48,10 @@ import com.jing.bilibilitv.http.data.UserInfo
     ExperimentalAnimationApi::class
 )
 @Composable
-fun HomeScreen(userInfo: UserInfo){
+fun HomeScreen(
+    userInfo: UserInfo,
+    onSelectPlayableData: (PlayableData) -> Unit
+){
     val selectedIDState = remember {
         mutableStateOf(value = MenuData.menuItems.first().id)
     }
@@ -54,7 +62,9 @@ fun HomeScreen(userInfo: UserInfo){
         userInfo = userInfo,
         selectedId = selectedIDState.value,
         content = {
-            NestedHomeScreenNavigation(navController = navController)
+            NestedHomeScreenNavigation(navController = navController, onSelectPlayableData = { playableData ->
+                onSelectPlayableData(playableData)
+            })
     }) { menuItem ->
         selectedIDState.value = menuItem.id
         navController.navigate(menuItem.id)

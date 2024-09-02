@@ -16,11 +16,14 @@ import com.example.bilitv.view.RankScreen
 import com.example.bilitv.view.RecommendationScreen
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.jing.bilibilitv.http.data.PlayableData
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun NestedHomeScreenNavigation(
     navController: NavHostController,
+    onSelectPlayableData: (PlayableData) -> Unit
 ) {
     AnimatedNavHost(navController = navController, startDestination = NestedScreens.Recommendation.title) {
         // e.g will add auth routes here if when we will extend project
@@ -28,8 +31,8 @@ fun NestedHomeScreenNavigation(
             NestedScreens.Recommendation.title,
             enterTransition = { tabEnterTransition() },
             exitTransition = { tabExitTransition() }) {
-            RecommendationScreen {
-
+            RecommendationScreen() { playableVideo ->
+                onSelectPlayableData(playableVideo)
             }
         }
 

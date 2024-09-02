@@ -47,6 +47,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.tv.material3.Border
 import androidx.tv.material3.ClickableSurfaceBorder
 import androidx.tv.material3.ClickableSurfaceDefaults
@@ -104,10 +105,7 @@ fun RecommendationScreen(
                 onSelectVideo(dataItem)
             }) {
                 DisplayableVideoItem(
-                    item = dataItem,
-                    onClick = { item ->
-                        println(item.title)
-                    }
+                    item = dataItem
                 )
             }
         }
