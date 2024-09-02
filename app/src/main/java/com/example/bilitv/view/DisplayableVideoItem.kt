@@ -57,7 +57,8 @@ fun DisplayableVideoItem(
                         Row(
                             modifier = Modifier
                                 .align(Alignment.BottomStart)
-                                .padding(start = 10.dp, bottom = 5.dp)
+                                .padding(start = 10.dp, bottom = 5.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             if (item.danmaku.isNotEmpty()) {
                                 Image(

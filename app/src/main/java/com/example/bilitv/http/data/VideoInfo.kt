@@ -26,7 +26,18 @@ data class HotVideInfo(
 }
 
 fun Long.toCountString(): String {
-    return if (this >= 10_000) {
+    return if (this >= 100_000_000) {
+        val roundedValue = (this / 100_000_000.0).let {
+            kotlin.math.round(it * 10) / 10  // 保留一位小数并四舍五入
+        }
+        "$roundedValue 亿"
+    } else if (this >= 10_000_000) {
+        val roundedValue = (this / 10_000_000.0).let {
+            kotlin.math.round(it * 10) / 10  // 保留一位小数并四舍五入
+        }
+        "$roundedValue 千万"
+    }
+    else if (this >= 10_000) {
         val roundedValue = (this / 10_000.0).let {
             kotlin.math.round(it * 10) / 10  // 保留一位小数并四舍五入
         }
@@ -63,9 +74,9 @@ data class SeasonRankVideoInfo(
     val newEp: SeasonVideoEPInfo
 ): DisplayableData {
     override val danmaku: String
-        get() = this.stat.danmaku.toString()
+        get() = this.stat.danmaku.toCountString()
     override val view: String
-        get() = this.stat.view.toString()
+        get() = this.stat.view.toCountString()
     override val ownerFace: String
         get() = this.newEp.cover
     override val ownerName: String
