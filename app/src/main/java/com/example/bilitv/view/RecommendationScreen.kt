@@ -95,8 +95,8 @@ fun RecommendationScreen(
         modifier = Modifier
             .fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 10.dp, vertical = 10.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+        horizontalArrangement = Arrangement.spacedBy(20.dp),
         columns = GridCells.Fixed(4)
     ) {
         items(dataItems.value.count()) { index ->

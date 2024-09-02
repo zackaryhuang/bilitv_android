@@ -82,67 +82,6 @@ fun CenterText(text: String) {
     }
 }
 
-
-@Composable
-fun SidePanel(modifier: Modifier = Modifier, expand: Boolean, onFocusChanged: (Boolean) -> Unit) {
-    val items = listOf(
-        SidePanelItem("推荐", R.drawable.icon_recommend),
-        SidePanelItem("热门", R.drawable.icon_recommend),
-        SidePanelItem("直播", R.drawable.icon_recommend),
-        SidePanelItem("排行榜", R.drawable.icon_recommend),
-        SidePanelItem("关注", R.drawable.icon_recommend),
-    )
-
-    Column(
-        verticalArrangement = Arrangement.Top,
-        modifier = Modifier
-            .fillMaxHeight()
-            .focusable(true)
-            .background(Color(0xFF1E2022))
-
-    ) {
-        Spacer(
-            modifier = Modifier.height(30.dp)
-        )
-
-        items.forEach {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(all = 15.dp)
-                    .height(30.dp)
-                    .focusTarget()
-                    .onFocusChanged {
-                        println(it.hasFocus)
-                    }
-                    .clickable {
-                        onFocusChanged(!expand)
-                    },
-            ) {
-                Image(
-                    painter = painterResource(id = it.image),
-                    contentDescription = "Sample Image",
-                    modifier = Modifier
-                        .size(20.dp),
-                    contentScale = ContentScale.Crop,
-                )
-
-                if (expand) {
-                    Spacer(
-                        modifier = Modifier
-                            .width(10.dp)
-                    )
-
-                    Text(
-                        text = it.name,
-                        fontSize = 20.sp
-                    )
-                }
-            }
-        }
-    }
-}
-
 data class SidePanelItem(
     val name: String,
     @DrawableRes val image: Int

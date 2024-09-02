@@ -4,6 +4,9 @@ import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.gestures.FlingBehavior
+import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +20,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,10 +28,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -48,6 +54,7 @@ import com.jing.bilibilitv.http.data.DisplayableAndPlayableData
 import com.jing.bilibilitv.http.data.DisplayableData
 import com.jing.bilibilitv.http.data.PlayableData
 import com.jing.bilibilitv.http.data.UserInfo
+import kotlinx.coroutines.launch
 import java.nio.LongBuffer
 
 @Composable
@@ -55,10 +62,12 @@ fun ProfileScreen(
     onSelectVideo: (PlayableData) -> Unit
 ) {
     val scrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
     val viewModel: ProfileScreenModel = hiltViewModel()
     val recentVideos = viewModel.recentViewedItems.collectAsState()
     val watchLaterVideos = viewModel.watchLaterItems.collectAsState()
     val userInfo = viewModel.loginInfo.collectAsState()
+    scrollState.viewportSize
     LaunchedEffect(Unit) {
         if (recentVideos.value.isEmpty()) {
             viewModel.requestRecent()
@@ -74,9 +83,9 @@ fun ProfileScreen(
     }
     Column(
         modifier = Modifier
+            .fillMaxSize()
             .verticalScroll(scrollState)
     ) {
-        Spacer(modifier = Modifier.height(30.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -88,24 +97,47 @@ fun ProfileScreen(
                     modifier = Modifier
                         .width(280.dp)
                         .fillMaxHeight(),
-                    userInfo = it
+                    userInfo = it,
+                    onFocusChanged = {
+                        coroutineScope.launch {
+                            scrollState.animateScrollTo(0)
+                        }
+                    }
                 )
             }
 
-            ProfileItem(title = "我的关注", paintResource = R.drawable.icon_follow_2, modifier = Modifier
-                .width(110.dp)
-                .fillMaxHeight())
-            ProfileItem(title = "设置", paintResource = R.drawable.icon_setting, modifier = Modifier
-                .width(110.dp)
-                .fillMaxHeight())
-            ProfileItem(title = "关于", paintResource = R.drawable.icon_about, modifier = Modifier
-                .width(110.dp)
-                .fillMaxHeight())
-            ProfileItem(title = "退出", paintResource = R.drawable.icon_exit, modifier = Modifier
-                .width(110.dp)
-                .fillMaxHeight())
+            ProfileItem(
+                title = "我的关注",
+                paintResource = R.drawable.icon_follow_2,
+                modifier = Modifier
+                    .width(110.dp)
+                    .fillMaxHeight()
+            )
+            ProfileItem(
+                title = "设置",
+                paintResource = R.drawable.icon_setting,
+                modifier = Modifier
+                    .width(110.dp)
+                    .fillMaxHeight()
+            )
+            ProfileItem(
+                title = "关于",
+                paintResource = R.drawable.icon_about,
+                modifier = Modifier
+                    .width(110.dp)
+                    .fillMaxHeight()
+            )
+            ProfileItem(
+                title = "退出",
+                paintResource = R.drawable.icon_exit,
+                modifier = Modifier
+                    .width(110.dp)
+                    .fillMaxHeight()
+            )
         }
+
         Spacer(modifier = Modifier.height(10.dp))
+
         ProfileHorizontalVideoView(title = "最近播放", videos = recentVideos.value, onSelectVideo = {
             onSelectVideo(it)
         })
@@ -117,7 +149,10 @@ fun ProfileScreen(
 
 @Composable
 fun ProfileHorizontalVideoView(title: String, videos: List<DisplayableAndPlayableData>, onSelectVideo: (PlayableData) -> Unit) {
-    Column {
+    Column(
+        modifier = Modifier.fillMaxHeight()
+    ) {
+        Spacer(modifier = Modifier.height(10.dp))
         Text(
             text = title,
             fontSize = 24.sp,
@@ -127,6 +162,7 @@ fun ProfileHorizontalVideoView(title: String, videos: List<DisplayableAndPlayabl
                 .fillMaxWidth()
                 .padding(start = 5.dp)
         )
+        Spacer(modifier = Modifier.height(10.dp))
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -134,11 +170,13 @@ fun ProfileHorizontalVideoView(title: String, videos: List<DisplayableAndPlayabl
         ) {
             item {
                 videos.forEach { video ->
-                    BorderedFocusableItem(onClick = {
-                        onSelectVideo(video)
-                    }) {
+                    BorderedFocusableItem(
+                        modifier = Modifier.width(200.dp),
+                        onClick = {
+                            onSelectVideo(video)
+                        }
+                    ) {
                         DisplayableVideoItem(
-                            modifier = Modifier.width(200.dp),
                             item = video,
                             onClick = { item ->
                                 println(item.title)
@@ -148,6 +186,7 @@ fun ProfileHorizontalVideoView(title: String, videos: List<DisplayableAndPlayabl
                 }
             }
         }
+        Spacer(modifier = Modifier.height(10.dp))
     }
 }
 
@@ -164,10 +203,10 @@ fun ProfileItem(
     ) {
         Column(
             modifier
-                .fillMaxSize()
+                .height(170.dp)
                 .padding(all = 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.SpaceEvenly
         ) {
             Image(
                 modifier = Modifier
@@ -176,7 +215,7 @@ fun ProfileItem(
                 painter = painterResource(id = paintResource),
                 contentDescription = ""
             )
-            Spacer(modifier = Modifier.height(25.dp))
+
             Text(
                 text = title,
                 fontSize = 20.sp
@@ -188,7 +227,8 @@ fun ProfileItem(
 @Composable
 fun ProfileInfoCard(
     modifier: Modifier = Modifier,
-    userInfo: UserInfo
+    userInfo: UserInfo,
+    onFocusChanged: (Unit) -> Unit
 )
 {
     Box(
@@ -198,7 +238,9 @@ fun ProfileInfoCard(
     ) {
         Row(
             horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth().zIndex(0.9F)
+            modifier = Modifier
+                .fillMaxWidth()
+                .zIndex(0.9F)
         ) {
             UserAvatar(
                 cover = userInfo.face,
@@ -206,7 +248,11 @@ fun ProfileInfoCard(
             )
         }
         Surface(
-            modifier = Modifier.align(Alignment.BottomCenter),
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .onFocusChanged {
+                    onFocusChanged(Unit)
+                },
             colors = ClickableSurfaceDefaults.colors(containerColor = Color.White.copy(0.16F) , focusedContainerColor = Color.biliBlue),
             onClick = {
 
