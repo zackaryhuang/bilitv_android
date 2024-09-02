@@ -26,11 +26,12 @@ import com.jing.bilibilitv.http.data.DisplayableData
 
 @Composable
 fun DisplayableVideoItem(
+    modifier: Modifier = Modifier,
     item: DisplayableData,
     onClick: ((DisplayableData) -> Unit)? = null
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .height(240.dp)
             .clickable {
                 onClick?.let {

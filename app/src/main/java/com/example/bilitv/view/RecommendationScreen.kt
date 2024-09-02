@@ -127,7 +127,6 @@ object CardItemDefaults {
         )
     )
 
-    @OptIn(ExperimentalTvMaterial3Api::class)
     @ReadOnlyComposable
     @Composable
     fun shape(borderRadius: Dp) = ClickableSurfaceDefaults.shape(
@@ -135,7 +134,6 @@ object CardItemDefaults {
     )
 }
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun BorderedFocusableItem(
     modifier: Modifier = Modifier,

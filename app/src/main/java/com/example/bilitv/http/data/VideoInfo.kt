@@ -6,8 +6,8 @@ data class HotVideInfo(
     val pic: String,
     override val title: String,
     val desc: String,
-    val owner: VideoInfoOwner,
-    val stat: VideoInfoStat,
+    val owner: VideoOwnerInfo,
+    val stat: VideoStatInfo,
     override val aid: String,
     override val cid: String,
 ): DisplayableData, PlayableData {
@@ -89,8 +89,8 @@ data class VideoInfo(
     val showInfo: Long,
     @SerializedName("track_id")
     val trackId: String,
-    val stat: VideoInfoStat,
-    val owner: VideoInfoOwner
+    val stat: VideoStatInfo,
+    val owner: VideoOwnerInfo
 ): DisplayableData, PlayableData {
     fun getDurationText(): String {
         if (duration <= 0) {
@@ -115,7 +115,7 @@ data class VideoInfo(
         get() = null
 }
 
-data class VideoInfoStat(
+data class VideoStatInfo(
     val view: Long,
     val like: Long,
     @SerializedName("danmaku")
@@ -136,7 +136,7 @@ data class SeasonVideoEPInfo(
     val indexShow: String,
 )
 
-data class VideoInfoOwner(
+data class VideoOwnerInfo(
     val mid: Long,
     val name: String,
     val face: String

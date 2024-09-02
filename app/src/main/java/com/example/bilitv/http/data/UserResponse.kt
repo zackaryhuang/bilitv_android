@@ -15,7 +15,7 @@ data class UserInfo(
      */
     @SerializedName("mobile_verified")
     val mobileVerified: Long,
-    val money: Double,
+    val money: Long,
     val uname: String,
     /**
      * 会员到期时间	毫秒 时间戳
@@ -33,7 +33,14 @@ data class UserInfo(
      * 1：月度大会员
      * 2：年度及以上大会员
      */
-    val vipType: Long
+    val vipType: Int,
+
+    val wallet: UserWalletInfo
+)
+
+data class UserWalletInfo(
+    @SerializedName("bcoin_balance")
+    val bCoin: Long,
 )
 
 data class UserLevelInfo(
@@ -43,4 +50,6 @@ data class UserLevelInfo(
     val currentMin: Long,
     @SerializedName("current_exp")
     val currentExp: Long,
+    @SerializedName("next_exp")
+    val nextExp: Long
 )

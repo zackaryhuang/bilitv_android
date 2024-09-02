@@ -1,10 +1,8 @@
 package com.jing.bilibilitv.http.api
 
 import com.example.bilitv.http.api.GlobalState
-import com.google.gson.Gson
 import com.jing.bilibilitv.http.api.wbi.WBI_HEADER
 import com.jing.bilibilitv.http.data.*
-import kotlinx.serialization.json.Json
 import okhttp3.ResponseBody
 import retrofit2.http.*
 
@@ -146,6 +144,10 @@ interface BilibiliApi {
         @Query("type") type: String? = null,
         @Query("ps") pageSize: Int = 20
     ): CommonDataResponse<HistoryResponse>
+
+    @GET("x/v2/history/toview/web")
+    suspend fun getWatchLater(
+    ): CommonDataResponse<WatchLaterResponse>
 
     /**
      * 获取视频分段快照

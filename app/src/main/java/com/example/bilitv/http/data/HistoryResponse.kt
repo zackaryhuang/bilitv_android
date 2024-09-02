@@ -12,6 +12,37 @@ data class HistoryResponse(
     val tab: List<HistoryTab>
 )
 
+data class WatchLaterResponse(
+    @SerializedName("list")
+    val list: List<WatchLaterItem>
+)
+
+data class WatchLaterItem(
+    @SerializedName("title")
+    override val title: String,
+    @SerializedName("cid")
+    val cid: Long,
+    @SerializedName("aid")
+    val aid: Long,
+    @SerializedName("stat")
+    val stat: VideoStatInfo,
+    @SerializedName("pic")
+    val pic: String,
+    @SerializedName("owner")
+    val owner: VideoOwnerInfo,
+): DisplayableData {
+    override val cover: String
+        get() = this.pic
+    override val ownerFace: String
+        get() = this.owner.face
+    override val ownerName: String
+        get() = this.owner.name
+    override val danmaku: String
+        get() = this.stat.danmaku.toCountString()
+    override val view: String
+        get() = this.stat.view.toCountString()
+}
+
 data class HistoryCursor(
     @SerializedName("business")
     val business: String,
@@ -33,7 +64,7 @@ data class HistoryItem(
     @SerializedName("badge")
     val badge: String,
     @SerializedName("cover")
-    val cover: String,
+    override val cover: String,
     @SerializedName("current")
     val current: String,
     @SerializedName("duration")
@@ -59,7 +90,7 @@ data class HistoryItem(
     @SerializedName("tag_name")
     val tagName: String,
     @SerializedName("title")
-    val title: String,
+    override val title: String,
     @SerializedName("total")
     val total: Long,
     @SerializedName("uri")
@@ -68,7 +99,16 @@ data class HistoryItem(
     val videos: Long,
     @SerializedName("view_at")
     val viewAt: Long
-)
+): DisplayableData {
+    override val ownerName: String
+        get() = this.authorName
+    override val ownerFace: String
+        get() = this.authorFace
+    override val danmaku: String
+        get() = ""
+    override val view: String
+        get() = ""
+}
 
 data class HistoryTab(
     @SerializedName("name")

@@ -51,7 +51,9 @@ fun NestedHomeScreenNavigation(
             NestedScreens.Rank.title,
             enterTransition = { tabEnterTransition() },
             exitTransition = { tabExitTransition() }) {
-            RankScreen()
+            RankScreen(onSelectVideo = {
+
+            })
         }
 
         composable(
