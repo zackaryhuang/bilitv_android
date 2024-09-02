@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.tv.material3.ClickableSurfaceColors
 import androidx.tv.material3.ClickableSurfaceDefaults
@@ -149,7 +150,7 @@ fun ProfileItem(
     paintResource: Int
 ) {
     Surface(
-        colors = ClickableSurfaceDefaults.colors(containerColor = Color(0xFFFF6699) , focusedContainerColor = Color.White.copy(0.3F)),
+        colors = ClickableSurfaceDefaults.colors(containerColor = Color.White.copy(0.16F) , focusedContainerColor = Color.biliBlue),
         onClick = { /*TODO*/ }
     ) {
         Column(
@@ -186,9 +187,18 @@ fun ProfileInfoCard(
             .fillMaxSize()
             .height(200.dp)
     ) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth().zIndex(0.9F)
+        ) {
+            UserAvatar(
+                cover = userInfo.face,
+                isVip = userInfo.vipType != 0
+            )
+        }
         Surface(
             modifier = Modifier.align(Alignment.BottomCenter),
-            colors = ClickableSurfaceDefaults.colors(containerColor = Color(0xFFFF6699) , focusedContainerColor = Color.White.copy(0.3F)),
+            colors = ClickableSurfaceDefaults.colors(containerColor = Color.White.copy(0.16F) , focusedContainerColor = Color.biliBlue),
             onClick = {
 
             }) {
@@ -229,16 +239,6 @@ fun ProfileInfoCard(
 
                 LevelBar(currentLevel = userInfo.levelInfo.currentLevel, currentValue = userInfo.levelInfo.currentExp, nextLevelNeedValue = userInfo.levelInfo.nextExp - userInfo.levelInfo.currentExp)
             }
-        }
-
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            UserAvatar(
-                cover = userInfo.face,
-                isVip = userInfo.vipType != 0
-            )
         }
     }
 
@@ -314,3 +314,9 @@ fun UserAvatar(cover: String, isVip: Boolean, modifier: Modifier = Modifier) {
         }
     }
 }
+
+val Color.Companion.biliBlue: Color
+    get() = Color(0xFF00AEEC)
+
+val Color.Companion.biliPink: Color
+    get() = Color(0xFFFF6699)
