@@ -110,8 +110,14 @@ interface BilibiliApi {
     ): CommonDataResponse<VideoUrlResponse>
 
     @GET("/x/player/pagelist")
-    suspend fun getCid(
+    suspend fun getCidByAid(
         @Query("aid") aid: String,
+        @Query("jsonp") jsonp: String = "jsonp"
+    ): CommonDataResponse<Array<VideoCid>>
+
+    @GET("/x/player/pagelist")
+    suspend fun getCidByBvid(
+        @Query("bvid") bvid: String,
         @Query("jsonp") jsonp: String = "jsonp"
     ): CommonDataResponse<Array<VideoCid>>
     /**

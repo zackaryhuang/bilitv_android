@@ -30,10 +30,10 @@ fun AppNavigation(
             exitTransition = { tabExitTransition() }
         ) {
             HomeScreen(userInfo = userInfo, onSelectPlayableData = { playableData ->
-                var link = ScreenRoute.VideoDetail.route
+                var link = ScreenRoute.VideoPlayer.route
                 link += ("/" + (playableData.aid ?: "null"))
                 link += ("/" + (playableData.bvid ?: "null"))
-                link += ("/" + (playableData.cid ?: "null"))
+//                link += ("/" + (playableData.cid ?: "null"))
                 navController.navigate(link)
             })
         }
@@ -43,9 +43,15 @@ fun AppNavigation(
             enterTransition = { tabEnterTransition() },
             exitTransition = { tabExitTransition() },
             arguments = listOf(
-                navArgument(ScreenRoute.VideoDetail.aid) { type = NavType.StringType; nullable = true},
-                navArgument(ScreenRoute.VideoDetail.cid) { type = NavType.StringType; nullable = true},
-                navArgument(ScreenRoute.VideoDetail.bvid) { type = NavType.StringType; nullable = true},
+                navArgument(ScreenRoute.VideoDetail.aid) {
+                    type = NavType.StringType; nullable = true
+                },
+                navArgument(ScreenRoute.VideoDetail.cid) {
+                    type = NavType.StringType; nullable = true
+                },
+                navArgument(ScreenRoute.VideoDetail.bvid) {
+                    type = NavType.StringType; nullable = true
+                },
             )
         ) { backStackEntry ->
             val cid = backStackEntry.arguments?.getString(ScreenRoute.VideoDetail.cid) ?: ""
@@ -53,7 +59,7 @@ fun AppNavigation(
             val aid = backStackEntry.arguments?.getString(ScreenRoute.VideoDetail.aid)
 
             val bvid = backStackEntry.arguments?.getString(ScreenRoute.VideoDetail.bvid)
-            
+
             if (aid != null) {
                 VideoDetailScreen(aid = aid, cid = cid)
             } else if (bvid != null) {
@@ -61,6 +67,27 @@ fun AppNavigation(
             } else {
                 VideoDetailScreen(cid = cid)
             }
+        }
+
+        composable(
+            ScreenRoute.VideoPlayer.routeWithArgument,
+            enterTransition = { tabEnterTransition() },
+            exitTransition = { tabExitTransition() },
+            arguments = listOf(
+                navArgument(ScreenRoute.VideoDetail.aid) {
+                    type = NavType.StringType; nullable = true
+                },
+                navArgument(ScreenRoute.VideoDetail.bvid) {
+                    type = NavType.StringType; nullable = true
+                },
+            )
+        ) { backStackEntry ->
+
+            val aid = backStackEntry.arguments?.getString(ScreenRoute.VideoDetail.aid)
+
+            val bvid = backStackEntry.arguments?.getString(ScreenRoute.VideoDetail.bvid)
+
+            VideoPlayerScreen(aid = aid, bvid = bvid)
         }
     }
 }

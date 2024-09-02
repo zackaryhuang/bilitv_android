@@ -66,6 +66,11 @@ sealed class ScreenRoute(val route: String) {
         const val bvid: String = "bvid"
         const val cid: String = "cid"
     }
+    object VideoPlayer : ScreenRoute("VideoPlayer") {
+        const val routeWithArgument: String = "VideoPlayer/{aid}/{bvid}"
+        const val aid: String = "aid"
+        const val bvid: String = "bvid"
+    }
 }
 
 object MenuData {
