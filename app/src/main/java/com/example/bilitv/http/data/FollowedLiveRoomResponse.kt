@@ -59,7 +59,7 @@ data class FollowedLiveRoom(
     val uid: Long,
     @SerializedName("uname")
     val uname: String
-): DisplayableData {
+): DisplayableAndPlayableData {
     override val cover: String
         get() = this.keyframe
     override val ownerName: String
@@ -70,4 +70,16 @@ data class FollowedLiveRoom(
         get() = ""
     override val danmaku: String
         get() = ""
+    override val episodeID: String?
+        get() = null
+    override val seasonID: String?
+        get() = null
+    override val aid: String?
+        get() = null
+    override val bvid: String?
+        get() = null
+    override val cid: String?
+        get() = null
+    override val roomID: String
+        get() = this.roomId.toString()
 }

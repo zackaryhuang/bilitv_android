@@ -30,13 +30,19 @@ fun AppNavigation(
             exitTransition = { tabExitTransition() }
         ) {
             HomeScreen(userInfo = userInfo, onSelectPlayableData = { playableData ->
-                var link = ScreenRoute.VideoPlayer.route
-                link += ("/" + (playableData.aid ?: "null"))
-                link += ("/" + (playableData.bvid ?: "null"))
-                link += ("/" + (playableData.cid ?: "null"))
-                link += ("/" + (playableData.seasonID ?: "null"))
-                link += ("/" + (playableData.episodeID ?: "null"))
-                navController.navigate(link)
+                if (playableData.roomID != null) {
+                    var link = ScreenRoute.LivePlayer.route
+                    link += ("/" + (playableData.roomID ?: "null"))
+                    navController.navigate(link)
+                } else {
+                    var link = ScreenRoute.VideoPlayer.route
+                    link += ("/" + (playableData.aid ?: "null"))
+                    link += ("/" + (playableData.bvid ?: "null"))
+                    link += ("/" + (playableData.cid ?: "null"))
+                    link += ("/" + (playableData.seasonID ?: "null"))
+                    link += ("/" + (playableData.episodeID ?: "null"))
+                    navController.navigate(link)
+                }
             })
         }
 
@@ -115,6 +121,22 @@ fun AppNavigation(
             val episodeID = backStackEntry.arguments?.getString(ScreenRoute.VideoPlayer.episodeID)
 
             VideoPlayerScreen(PlayData(aid, bvid, cid, seasonID, episodeID))
+        }
+
+        composable(
+            ScreenRoute.LivePlayer.routeWithArgument,
+            enterTransition = { tabEnterTransition() },
+            exitTransition = { tabExitTransition() },
+            arguments = listOf(
+                navArgument(ScreenRoute.LivePlayer.roomID) {
+                    type = NavType.StringType; nullable = true
+                },
+            )
+        ) { backStackEntry ->
+            val roomID = backStackEntry.arguments?.getString(ScreenRoute.LivePlayer.roomID)
+            roomID?.let {
+                LivePlayerScreen(roomID = it)
+            }
         }
     }
 }

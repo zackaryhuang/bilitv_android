@@ -32,9 +32,12 @@ import androidx.tv.material3.ClickableSurfaceDefaults
 import androidx.tv.material3.Surface
 import com.example.bilitv.view.model.LiveScreenModel
 import com.example.bilitv.view.model.RankScreenModel
+import com.jing.bilibilitv.http.data.PlayableData
 
 @Composable
-fun LiveScreen() {
+fun LiveScreen(
+    onSelectVideo: (PlayableData) -> Unit
+) {
     val listState = rememberLazyGridState()
     val state = remember { mutableStateOf(0) }
     val viewModel: LiveScreenModel = hiltViewModel()
@@ -104,7 +107,7 @@ fun LiveScreen() {
             items(dataItems.value.count()) { index ->
                 val dataItem = dataItems.value[index]
                 BorderedFocusableItem(onClick = {
-//                onSelectVideo(dataItem)
+                    onSelectVideo(dataItem)
                 }) {
                     DisplayableVideoItem(
                         item = dataItem,

@@ -51,6 +51,8 @@ data class DynamicItem(
         get() = null
     override val episodeID: String?
         get() = null
+    override val roomID: String?
+        get() = null
 }
 
 data class DynamicBasic(

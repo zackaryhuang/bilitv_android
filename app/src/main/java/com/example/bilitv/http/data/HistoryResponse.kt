@@ -51,6 +51,8 @@ data class WatchLaterItem(
         get() = null
     override val episodeID: String?
         get() = null
+    override val roomID: String?
+        get() = null
 }
 
 data class HistoryCursor(
@@ -127,6 +129,8 @@ data class HistoryItem(
     override val episodeID: String
         get() = this.history.epid.toString()
     override val seasonID: String?
+        get() = null
+    override val roomID: String?
         get() = null
 }
 

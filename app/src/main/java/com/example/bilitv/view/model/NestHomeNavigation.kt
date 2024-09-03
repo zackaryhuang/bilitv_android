@@ -49,7 +49,9 @@ fun NestedHomeScreenNavigation(
             NestedScreens.Live.title,
             enterTransition = { tabEnterTransition() },
             exitTransition = { tabExitTransition() }) {
-            LiveScreen()
+            LiveScreen() {
+                onSelectPlayableData(it)
+            }
         }
 
         composable(

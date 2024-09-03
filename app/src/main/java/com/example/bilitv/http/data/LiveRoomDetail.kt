@@ -1,7 +1,79 @@
 package com.jing.bilibilitv.http.data
 
+import com.google.common.math.LongMath
 import com.google.gson.annotations.SerializedName
 
+
+data class LiveRoomStreamsResponse(
+    @SerializedName("room_id")
+    val roomID: Long,
+    @SerializedName("live_status")
+    val liveStatus: Int,
+    @SerializedName("playurl_info")
+    val playUrlInfo: LiveRoomPlayUrlInfo
+)
+
+data class LiveRoomPlayUrlInfo(
+    @SerializedName("playurl")
+    val playUrl: LiveRoomPlayUrl
+)
+
+data class LiveRoomPlayUrl(
+    val cid: Long,
+    @SerializedName("g_qn_desc")
+    val qualityDesc: List<LiveRoomQualityDesc>,
+    @SerializedName("stream")
+    val streams: List<LiveRoomStream>
+)
+
+data class LiveRoomQualityDesc(
+    val qn: Long,
+    val desc: String,
+    @SerializedName("hdr_desc")
+    val hdrDesc: String?,
+    @SerializedName("attr_desc")
+    val attrDesc: String?,
+)
+
+data class LiveRoomStream(
+    @SerializedName("protocol_name")
+    val protocolName: String,
+    @SerializedName("format")
+    val formats: List<LiveRoomStreamFormat>,
+)
+
+data class LiveRoomStreamFormat(
+    @SerializedName("format_name")
+    val formatName: String,
+    @SerializedName("codec")
+    val codecs: List<LiveRoomStreamFormatCodec>,
+    @SerializedName("master_url")
+    val masterUrl: String
+)
+
+data class LiveRoomStreamFormatCodec(
+    @SerializedName("codec_name")
+    val codecName: String,
+    @SerializedName("current_qn")
+    val currentQn: Long,
+    @SerializedName("accept_qn")
+    val acceptQn: List<Long>,
+    @SerializedName("base_url")
+    val baseUrl: String,
+    @SerializedName("hdr_qn")
+    val hdrQn: Long?,
+    @SerializedName("dolby_type")
+    val dolbyType: Int,
+    @SerializedName("attr_name")
+    val attrName: String,
+    @SerializedName("url_info")
+    val urlInfos: List<LiveRoomStreamFormatCodecUrlInfo>,
+)
+
+data class LiveRoomStreamFormatCodecUrlInfo(
+    val host: String,
+    val extra: String,
+)
 
 data class LiveRoomDetail(
     @SerializedName("allow_change_area_time")

@@ -76,6 +76,11 @@ sealed class ScreenRoute(val route: String) {
         const val seasonID: String = "seasonID"
         const val episodeID: String = "episodeID"
     }
+
+    object LivePlayer : ScreenRoute("LivePlayer") {
+        const val routeWithArgument: String = "LivePlayer/{roomID}"
+        const val roomID: String = "roomID"
+    }
 }
 
 object MenuData {

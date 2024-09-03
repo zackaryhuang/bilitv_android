@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bilitv.view.LiveCategoryInfo
 import com.jing.bilibilitv.http.api.LiveApi
+import com.jing.bilibilitv.http.data.DisplayableAndPlayableData
 import com.jing.bilibilitv.http.data.DisplayableData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,7 @@ class LiveScreenModel @Inject constructor(
     private val liveApi: LiveApi,
 ) : ViewModel() {
 
-    private val _feedItems = MutableStateFlow<List<DisplayableData>>(value = mutableListOf<DisplayableData>())
+    private val _feedItems = MutableStateFlow<List<DisplayableAndPlayableData>>(value = mutableListOf<DisplayableAndPlayableData>())
     val feedItems = _feedItems.asStateFlow()
 
     var page = 1

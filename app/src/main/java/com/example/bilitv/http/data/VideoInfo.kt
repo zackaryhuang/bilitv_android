@@ -27,6 +27,8 @@ data class HotVideInfo(
         get() = null
     override val episodeID: String?
         get() = null
+    override val roomID: String?
+        get() = null
 }
 
 fun Long.toCountString(): String {
@@ -57,6 +59,7 @@ interface PlayableData {
     val cid: String?
     val seasonID: String?
     val episodeID: String?
+    val roomID: String?
 }
 
 interface DisplayableData {
@@ -100,6 +103,8 @@ data class SeasonRankVideoInfo(
     override val cid: String?
         get() = null
     override val bvid: String?
+        get() = null
+    override val roomID: String?
         get() = null
 }
 
@@ -147,6 +152,8 @@ data class VideoInfo(
     override val episodeID: String?
         get() = null
     override val seasonID: String?
+        get() = null
+    override val roomID: String?
         get() = null
 }
 

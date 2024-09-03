@@ -75,7 +75,7 @@ data class LiveRoomOfArea(
     val userCoverFlag: Long,
     @SerializedName("watched_show")
     val watchedShow: WatchedShow
-): DisplayableData {
+): DisplayableAndPlayableData {
     override val ownerName: String
         get() = this.uname
     override val ownerFace: String
@@ -84,6 +84,18 @@ data class LiveRoomOfArea(
         get() = ""
     override val danmaku: String
         get() = ""
+    override val aid: String?
+        get() = null
+    override val bvid: String?
+        get() = null
+    override val cid: String?
+        get() = null
+    override val episodeID: String?
+        get() = null
+    override val seasonID: String?
+        get() = null
+    override val roomID: String
+        get() = this.roomId.toString()
 }
 
 data class WatchedShow(

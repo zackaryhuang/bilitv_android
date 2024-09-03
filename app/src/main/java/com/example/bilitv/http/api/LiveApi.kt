@@ -74,7 +74,20 @@ interface LiveApi {
     ): CommonDataResponse<LiveRoomWsResponse>
 
     @GET("/room/v1/Room/get_info")
-    suspend fun queryLiveRoomDetail(@Query("room_id") roomId: Long): CommonDataResponse<LiveRoomDetail>
+    suspend fun getLiveRoomDetail(@Query("room_id") roomId: Long): CommonDataResponse<LiveRoomDetail>
+
+    @GET("/xlive/web-room/v2/index/getRoomPlayInfo")
+    suspend fun getLiveStreams(
+        @Query("room_id") roomID: Long,
+        @Query("protocol") protocol: String = "1",
+        @Query("format") format: String = "0,1,2",
+        @Query("codec") codec: String = "0,1",
+        @Query("qn") qn: String = "10000",
+        @Query("platform") platform: String = "web",
+        @Query("ptype") ptype: String = "8",
+        @Query("dolby") dolby: String = "5",
+        @Query("panorama") panorama: Int = 1,
+    ): CommonDataResponse<LiveRoomStreamsResponse>
 
     companion object {
         const val BASE_URL = "https://api.live.bilibili.com"
