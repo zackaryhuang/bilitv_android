@@ -5,7 +5,7 @@
  <img src = 'https://img.shields.io/badge/UI-Jetpack Compose-orange.svg?style-flat'> 
 </div>
 
-本项目基于 Jetpack Compose 使用 Kotlin 开发。对应 Apple TV 客户端将在后续开源。感谢 [哔哩哔哩-API收集整理 ](https://github.com/SocialSisterYi/bilibili-API-collect)项目提供接口信息。
+本项目基于 Jetpack Compose 使用 Kotlin 开发。对应 Apple TV 版本 [bilibili for Apple TV](https://github.com/zackaryhuang/bilibilitv)。感谢 [哔哩哔哩-API收集整理 ](https://github.com/SocialSisterYi/bilibili-API-collect)项目提供接口信息。
 
 ### APP 预览图
 
